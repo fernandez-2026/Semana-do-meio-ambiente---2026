@@ -3,187 +3,397 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fernandez pelo Clima</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Qual é o seu impacto? | Fernandez</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --white:#ffffff; --black:#111111;
-    --gd:#2a7a5a; --gm:#3aaa7a; --gl:#52c896; --gp:#e8f7f1;
-    --gray:#f5f5f5; --grayb:#e8e8e8; --soft:#666;
-    --bronze-a:#cd7f32; --bronze-b:#a0522d; --bronze-c:#f5deb3;
-    --silver-a:#a8a9ad; --silver-b:#6e6e6e; --silver-c:#e8e8e8;
-    --gold-a:#ffd700;   --gold-b:#b8860b;   --gold-c:#fff8dc;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--black);min-height:100vh;overflow-x:hidden;}
+/* ═══════════════════════════════════════════
+   VARIÁVEIS E RESET
+═══════════════════════════════════════════ */
+:root {
+  --gd: #1e6648; --gm: #2d8a5e; --gl: #45b07a; --gx: #7dcfa5;
+  --gp: #eaf6ef; --gpp: #d0edd9;
+  --black: #0e1a14; --white: #ffffff;
+  --gray: #f4f6f5; --grayb: #dde8e2; --soft: #5a7060;
+  --bronze: #c47b2b; --bronze-l: #f5deb3;
+  --silver: #8e9ba0; --silver-l: #dde8ec;
+  --gold: #c9a227; --gold-l: #fff3c4;
+  --radius: 18px; --radius-sm: 12px;
+  --shadow: 0 4px 24px rgba(14,26,20,.10);
+  --shadow-lg: 0 12px 48px rgba(14,26,20,.16);
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-  /* ── HEADER ── */
-  .header{background:var(--white);border-bottom:1px solid #ececec;padding:28px 24px 24px;text-align:center;animation:fadeDown .6s ease both;}
-  @keyframes fadeDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+/* ═══════════════════════════════════════════
+   HEADER FIXO
+═══════════════════════════════════════════ */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--grayb);
+  padding: 12px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo-row { display:flex; align-items:center; gap:10px; }
+.logo-svg  { width:36px; height:36px; flex-shrink:0; }
+.logo-name { font-family:'Playfair Display',serif; font-size:17px; font-weight:900; color:var(--black); line-height:1; }
+.logo-sub  { font-size:7.5px; letter-spacing:2.5px; text-transform:uppercase; color:var(--soft); margin-top:2px; }
+.hashtag-pill {
+  background: var(--gp); border:1.5px solid var(--gl);
+  color:var(--gd); font-size:10px; font-weight:600; letter-spacing:.6px;
+  padding:4px 12px; border-radius:100px;
+}
 
-  .logo-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px;}
-  .logo-diamond{width:46px;height:46px;}
-  .logo-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--black);letter-spacing:-.3px;line-height:1;}
-  .logo-sub{font-size:8.5px;letter-spacing:3px;text-transform:uppercase;color:var(--soft);margin-top:3px;}
+/* ═══════════════════════════════════════════
+   WRAPPER CENTRAL
+═══════════════════════════════════════════ */
+.wrap { max-width:500px; margin:0 auto; padding:20px 18px 60px; }
 
-  .mascote-wrap{display:flex;justify-content:center;margin-bottom:14px;animation:mascIn .8s cubic-bezier(.175,.885,.32,1.275) both .25s;}
-  @keyframes mascIn{from{opacity:0;transform:translateY(24px) scale(.85)}to{opacity:1;transform:translateY(0) scale(1)}}
-  .mascote-svg{width:100px;height:116px;animation:sway 3.5s ease-in-out infinite 1.5s;transform-origin:bottom center;}
-  @keyframes sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
-  .eye-l{animation:blink 5s ease-in-out infinite .5s;transform-origin:46px 41px;}
-  .eye-r{animation:blink 5s ease-in-out infinite .8s;transform-origin:72px 41px;}
-  @keyframes blink{0%,88%,100%{transform:scaleY(1)}93%{transform:scaleY(.08)}}
+/* ═══════════════════════════════════════════
+   TELAS
+═══════════════════════════════════════════ */
+.screen { display:none; animation: fadeUp .45s ease both; }
+.screen.active { display:block; }
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(18px); }
+  to   { opacity:1; transform:translateY(0); }
+}
 
-  .hashtag{display:inline-block;background:var(--gp);border:1.5px solid var(--gl);color:var(--gd);font-size:11px;font-weight:600;letter-spacing:.8px;padding:5px 16px;border-radius:100px;margin-bottom:14px;}
-  .header h1{font-family:'Playfair Display',serif;font-size:25px;font-weight:900;line-height:1.2;}
-  .header h1 span{color:var(--gd);}
-  .header p{margin-top:7px;font-size:13px;color:var(--soft);font-weight:300;line-height:1.6;}
+/* ═══════════════════════════════════════════
+   TELA INICIAL
+═══════════════════════════════════════════ */
+.hero {
+  text-align: center;
+  padding: 8px 0 24px;
+}
+.mascote-hero {
+  display:flex; justify-content:center;
+  margin-bottom: 16px;
+  animation: mascIn .8s cubic-bezier(.175,.885,.32,1.275) both .2s;
+}
+@keyframes mascIn {
+  from { opacity:0; transform:translateY(20px) scale(.85); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
+}
+.mascote-hero svg {
+  width:110px; height:126px;
+  animation: sway 4s ease-in-out infinite 1.2s;
+  transform-origin: bottom center;
+}
+@keyframes sway { 0%,100%{transform:rotate(-4deg)} 50%{transform:rotate(4deg)} }
+.eye-l { animation:blink 5s ease-in-out infinite .4s; transform-origin:46px 41px; }
+.eye-r { animation:blink 5s ease-in-out infinite .9s; transform-origin:74px 41px; }
+@keyframes blink { 0%,88%,100%{transform:scaleY(1)} 93%{transform:scaleY(.08)} }
 
-  /* ── LAYOUT ── */
-  .container{max-width:480px;margin:0 auto;padding:24px 20px 56px;}
-  .screen{display:none;animation:fadeUp .4s ease both;}
-  .screen.active{display:block;}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.hero-tag {
+  display:inline-block;
+  background: linear-gradient(135deg, var(--gd), var(--gl));
+  color:var(--white); font-size:10px; font-weight:700;
+  letter-spacing:1.5px; text-transform:uppercase;
+  padding:5px 16px; border-radius:100px; margin-bottom:14px;
+}
+.hero h1 {
+  font-family:'Playfair Display',serif;
+  font-size:32px; font-weight:900; line-height:1.1;
+  color:var(--black); margin-bottom:10px;
+}
+.hero h1 em { color:var(--gd); font-style:normal; }
+.hero p {
+  font-size:14px; color:var(--soft); line-height:1.65;
+  font-weight:300; margin-bottom:28px;
+}
 
-  /* ── PROGRESS ── */
-  .progress-bar{height:3px;background:var(--grayb);border-radius:10px;overflow:hidden;margin-bottom:6px;}
-  .progress-fill{height:100%;background:linear-gradient(90deg,var(--gm),var(--gd));border-radius:10px;transition:width .5s ease;}
-  .step-label{font-size:11px;color:#bbb;text-align:right;margin-bottom:18px;}
+/* Select de setor */
+.setor-wrap { margin-bottom:20px; }
+.setor-label {
+  display:block; font-size:12px; font-weight:600;
+  color:var(--gd); letter-spacing:1px; text-transform:uppercase;
+  margin-bottom:8px;
+}
+.setor-select {
+  width:100%; padding:14px 18px;
+  background:var(--gray); border:2px solid var(--grayb);
+  border-radius:var(--radius-sm);
+  font-family:'DM Sans',sans-serif; font-size:15px; color:var(--black);
+  appearance:none; -webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232d8a5e' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 16px center;
+  cursor:pointer; transition:border-color .2s, box-shadow .2s;
+}
+.setor-select:focus { outline:none; border-color:var(--gm); box-shadow:0 0 0 3px rgba(45,138,94,.15); }
+.setor-select.error { border-color:#e05555; box-shadow:0 0 0 3px rgba(224,85,85,.12); }
+.setor-error { display:none; font-size:12px; color:#e05555; margin-top:6px; }
+.setor-error.show { display:block; }
 
-  /* ── QUESTION CARD ── */
-  .question-card{background:var(--white);border:1.5px solid var(--grayb);border-radius:20px;padding:26px 22px;box-shadow:0 2px 20px rgba(0,0,0,.05);}
-  .q-emoji{font-size:34px;display:block;margin-bottom:10px;}
-  .q-num{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gd);margin-bottom:8px;}
-  .q-text{font-size:16px;font-weight:500;line-height:1.5;color:var(--black);margin-bottom:20px;}
+.btn-start {
+  width:100%; padding:17px;
+  background:linear-gradient(135deg, var(--gm), var(--gd));
+  border:none; border-radius:var(--radius);
+  color:var(--white); font-family:'DM Sans',sans-serif;
+  font-size:16px; font-weight:600; letter-spacing:.3px;
+  cursor:pointer; transition:all .25s;
+  box-shadow:0 6px 24px rgba(30,102,72,.3);
+}
+.btn-start:hover {
+  transform:translateY(-2px);
+  box-shadow:0 10px 32px rgba(30,102,72,.4);
+}
+.btn-start:active { transform:translateY(0); }
 
-  /* ── OPTIONS ── */
-  .options{display:flex;flex-direction:column;gap:10px;}
-  .option-btn{background:var(--gray);border:1.5px solid transparent;border-radius:14px;padding:13px 16px;color:var(--black);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:400;text-align:left;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:12px;line-height:1.35;}
-  .option-btn:hover{background:var(--gp);border-color:var(--gl);transform:translateX(4px);}
-  .option-btn.selected{background:var(--gp);border-color:var(--gd);color:var(--gd);font-weight:500;}
-  .opt-icon{font-size:18px;flex-shrink:0;}
+/* Chips de info */
+.info-chips { display:flex; gap:8px; justify-content:center; margin-top:20px; flex-wrap:wrap; }
+.chip {
+  background:var(--gp); border:1px solid var(--gpp);
+  color:var(--gd); font-size:11px; font-weight:500;
+  padding:5px 12px; border-radius:100px;
+}
 
-  /* ── NEXT BTN ── */
-  .btn-next{width:100%;margin-top:18px;padding:15px;background:var(--gd);border:none;border-radius:14px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(42,122,90,.22);}
-  .btn-next:hover{background:var(--gm);transform:translateY(-2px);box-shadow:0 8px 24px rgba(42,122,90,.3);}
+/* ═══════════════════════════════════════════
+   PROGRESS BAR
+═══════════════════════════════════════════ */
+.progress-header {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:8px;
+}
+.progress-label { font-size:11px; color:var(--soft); font-weight:500; }
+.progress-frac  { font-size:11px; color:var(--soft); }
+.progress-track {
+  height:4px; background:var(--grayb); border-radius:10px;
+  overflow:hidden; margin-bottom:20px;
+}
+.progress-fill {
+  height:100%;
+  background:linear-gradient(90deg, var(--gx), var(--gd));
+  border-radius:10px; transition:width .5s ease;
+}
 
-  /* ── RESULT ── */
-  #screen-result{text-align:center;}
+/* ═══════════════════════════════════════════
+   CARD DE PERGUNTA
+═══════════════════════════════════════════ */
+.q-card {
+  background:var(--white); border:1.5px solid var(--grayb);
+  border-radius:var(--radius); padding:24px 20px;
+  box-shadow:var(--shadow);
+}
+.q-num  { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gm); margin-bottom:8px; }
+.q-emoji { font-size:30px; display:block; margin-bottom:10px; }
+.q-text { font-size:16px; font-weight:500; line-height:1.5; color:var(--black); margin-bottom:20px; }
 
-  .result-mascote{display:flex;justify-content:center;margin-bottom:16px;animation:pop .7s cubic-bezier(.175,.885,.32,1.275) both .1s;}
-  @keyframes pop{from{opacity:0;transform:scale(.5) rotate(-8deg)}to{opacity:1;transform:scale(1) rotate(0)}}
-  .result-mascote .mascote-svg{width:86px;height:100px;}
+/* Opções */
+.options { display:flex; flex-direction:column; gap:9px; }
+.opt {
+  background:var(--gray); border:1.5px solid transparent;
+  border-radius:var(--radius-sm); padding:13px 16px;
+  font-family:'DM Sans',sans-serif; font-size:14px; color:var(--black);
+  text-align:left; cursor:pointer; transition:all .18s;
+  display:flex; align-items:center; gap:12px; line-height:1.35;
+}
+.opt-letter {
+  width:26px; height:26px; border-radius:50%;
+  background:var(--grayb); color:var(--soft);
+  font-size:12px; font-weight:700; display:flex;
+  align-items:center; justify-content:center; flex-shrink:0;
+  transition:all .18s;
+}
+.opt:hover { background:var(--gp); border-color:var(--gl); transform:translateX(3px); }
+.opt:hover .opt-letter { background:var(--gl); color:var(--white); }
+.opt.selected { background:var(--gp); border-color:var(--gd); color:var(--gd); font-weight:500; }
+.opt.selected .opt-letter { background:var(--gd); color:var(--white); }
 
-  /* ── SELO CÍRCULO ── */
-  .selo-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:20px;animation:pop .7s cubic-bezier(.175,.885,.32,1.275) both .2s;}
-  .selo-circle{width:130px;height:130px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;}
+/* Botão próxima */
+.btn-next {
+  width:100%; margin-top:16px; padding:15px;
+  background:var(--gd); border:none; border-radius:var(--radius);
+  color:var(--white); font-family:'DM Sans',sans-serif;
+  font-size:14px; font-weight:600; cursor:pointer;
+  transition:all .2s; box-shadow:0 4px 18px rgba(30,102,72,.22);
+}
+.btn-next:hover { background:var(--gm); transform:translateY(-2px); box-shadow:0 8px 28px rgba(30,102,72,.3); }
 
-  /* Bronze */
-  .selo-bronze{background:radial-gradient(circle at 35% 35%,#f0c070,var(--bronze-a) 50%,var(--bronze-b));box-shadow:0 0 0 6px var(--bronze-c),0 0 0 9px var(--bronze-a),0 8px 28px rgba(160,82,45,.4);}
-  /* Prata */
-  .selo-prata{background:radial-gradient(circle at 35% 35%,#e0e0e0,var(--silver-a) 50%,var(--silver-b));box-shadow:0 0 0 6px var(--silver-c),0 0 0 9px var(--silver-a),0 8px 28px rgba(110,110,110,.4);}
-  /* Ouro */
-  .selo-ouro{background:radial-gradient(circle at 35% 35%,#fff0a0,var(--gold-a) 50%,var(--gold-b));box-shadow:0 0 0 6px var(--gold-c),0 0 0 9px var(--gold-a),0 8px 28px rgba(184,134,11,.5);}
-  /* rotação suave do anel */
-  .selo-circle::before{content:'';position:absolute;inset:-9px;border-radius:50%;border:3px solid transparent;animation:spinRing 8s linear infinite;}
-  .selo-bronze::before{border-top-color:var(--bronze-a);border-right-color:var(--bronze-c);}
-  .selo-prata::before{border-top-color:var(--silver-a);border-right-color:var(--silver-c);}
-  .selo-ouro::before{border-top-color:var(--gold-a);border-right-color:var(--gold-c);}
-  @keyframes spinRing{to{transform:rotate(360deg)}}
+/* ═══════════════════════════════════════════
+   TELA DE RESULTADO
+═══════════════════════════════════════════ */
+#screen-result { text-align:center; }
 
-  .selo-emoji{font-size:46px;line-height:1;}
-  .selo-tier{font-family:'Playfair Display',serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
-  .selo-bronze .selo-tier{color:var(--bronze-b);}
-  .selo-prata  .selo-tier{color:var(--silver-b);}
-  .selo-ouro   .selo-tier{color:var(--gold-b);}
+/* Mascote resultado */
+.mascote-result {
+  display:flex; justify-content:center; margin-bottom:14px;
+  animation: popIn .7s cubic-bezier(.175,.885,.32,1.275) both .1s;
+}
+@keyframes popIn { from{opacity:0;transform:scale(.5) rotate(-8deg)} to{opacity:1;transform:scale(1) rotate(0)} }
+.mascote-result svg { width:88px; height:100px; }
 
-  /* Badge card preto */
-  .badge-card{background:var(--black);border-radius:20px;padding:24px 22px 20px;margin-bottom:16px;position:relative;overflow:hidden;animation:fadeUp .5s ease both .35s;}
-  .badge-card::after{content:'';position:absolute;top:-50px;right:-50px;width:160px;height:160px;background:radial-gradient(circle,rgba(82,200,150,.15) 0%,transparent 70%);pointer-events:none;}
-  .badge-f{position:absolute;top:14px;right:16px;opacity:.12;}
-  .badge-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--white);margin-bottom:6px;}
-  .badge-sub{font-size:13px;color:rgba(255,255,255,.5);font-weight:300;line-height:1.55;margin-bottom:14px;}
-  .badge-div{height:1.5px;background:linear-gradient(90deg,var(--gm),transparent);border-radius:2px;margin-bottom:14px;}
-  .badge-desc{font-size:12.5px;color:rgba(255,255,255,.6);line-height:1.65;text-align:left;font-weight:300;}
+/* Selo */
+.selo-wrap { display:flex; flex-direction:column; align-items:center; margin-bottom:20px; }
+.selo-circle {
+  width:128px; height:128px; border-radius:50%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  position:relative; margin-bottom:10px;
+  animation: popIn .7s cubic-bezier(.175,.885,.32,1.275) both .25s;
+}
+.selo-circle::before {
+  content:''; position:absolute; inset:-8px; border-radius:50%;
+  border:3px solid transparent; animation:spinRing 8s linear infinite;
+}
+@keyframes spinRing { to{transform:rotate(360deg)} }
 
-  /* ── IMPACT GRID ── */
-  .impact-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;animation:fadeUp .5s ease both .5s;}
-  .ic{background:var(--gray);border:1px solid var(--grayb);border-radius:14px;padding:14px 12px;text-align:center;}
-  .ic.full{grid-column:1/-1;}
-  .ic.dark{background:var(--black);border-color:var(--black);}
-  .ic-num{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:var(--gd);line-height:1;margin-bottom:5px;}
-  .ic.dark .ic-num{color:var(--gl);}
-  .ic-lbl{font-size:11px;color:var(--soft);line-height:1.45;}
-  .ic.dark .ic-lbl{color:rgba(255,255,255,.45);}
+.selo-ouro   { background:radial-gradient(circle at 35% 35%,#fff3a0,var(--gold) 55%,#a07800); box-shadow:0 0 0 5px var(--gold-l),0 0 0 8px var(--gold),0 10px 36px rgba(201,162,39,.45); }
+.selo-ouro::before   { border-top-color:var(--gold); border-right-color:var(--gold-l); }
+.selo-prata  { background:radial-gradient(circle at 35% 35%,#ecf0f1,var(--silver) 55%,#5a6a70); box-shadow:0 0 0 5px var(--silver-l),0 0 0 8px var(--silver),0 10px 36px rgba(142,155,160,.4); }
+.selo-prata::before  { border-top-color:var(--silver); border-right-color:var(--silver-l); }
+.selo-bronze { background:radial-gradient(circle at 35% 35%,#f5deb3,var(--bronze) 55%,#8b4513); box-shadow:0 0 0 5px var(--bronze-l),0 0 0 8px var(--bronze),0 10px 36px rgba(196,123,43,.4); }
+.selo-bronze::before { border-top-color:var(--bronze); border-right-color:var(--bronze-l); }
 
-  /* ── TIP / ISO ── */
-  .tip-box{background:var(--gp);border:1.5px solid var(--gl);border-radius:14px;padding:15px 18px;display:flex;gap:12px;align-items:flex-start;margin-bottom:14px;text-align:left;animation:fadeUp .5s ease both .65s;}
-  .tip-icon{font-size:18px;flex-shrink:0;margin-top:2px;}
-  .tip-box p{font-size:13px;color:var(--black);line-height:1.6;}
-  .tip-box strong{color:var(--gd);}
-  .iso-note{border-left:3px solid var(--gm);padding:10px 14px;background:var(--gray);border-radius:0 10px 10px 0;font-size:11px;color:var(--soft);line-height:1.6;text-align:left;margin-bottom:18px;animation:fadeUp .5s ease both .75s;}
-  .btn-restart{width:100%;padding:13px;background:transparent;border:1.5px solid #ddd;border-radius:14px;color:var(--soft);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s;animation:fadeUp .5s ease both .85s;}
-  .btn-restart:hover{border-color:var(--black);color:var(--black);}
-  .fonte-nota{font-size:10px;color:#bbb;margin-top:14px;line-height:1.7;animation:fadeUp .4s ease both .95s;}
+.selo-emoji { font-size:44px; line-height:1; }
+.selo-tier  { font-family:'Playfair Display',serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-top:3px; }
+.selo-ouro   .selo-tier { color:#7a5c00; }
+.selo-prata  .selo-tier { color:#4a5a60; }
+.selo-bronze .selo-tier { color:#7a3a10; }
 
-  /* ── CONFETTI ── */
-  .confetti-wrap{position:fixed;top:0;left:0;right:0;pointer-events:none;z-index:999;}
-  .cp{position:absolute;border-radius:2px;animation:fall linear forwards;}
-  @keyframes fall{from{transform:translateY(-10px) rotate(0deg);opacity:1}to{transform:translateY(105vh) rotate(800deg);opacity:0}}
+/* Card preto */
+.result-card {
+  background:var(--black); border-radius:var(--radius);
+  padding:24px 20px 20px; margin-bottom:16px;
+  position:relative; overflow:hidden;
+  animation:fadeUp .5s ease both .4s;
+  text-align:left;
+}
+.result-card::after {
+  content:''; position:absolute; top:-60px; right:-60px;
+  width:180px; height:180px;
+  background:radial-gradient(circle,rgba(69,176,122,.15) 0%,transparent 70%);
+  pointer-events:none;
+}
+.rc-watermark { position:absolute; top:14px; right:16px; opacity:.1; }
+.rc-name { font-family:'Playfair Display',serif; font-size:22px; font-weight:900; color:var(--white); margin-bottom:5px; }
+.rc-sub  { font-size:13px; color:rgba(255,255,255,.5); font-weight:300; line-height:1.55; margin-bottom:14px; }
+.rc-div  { height:1.5px; background:linear-gradient(90deg,var(--gl),transparent); border-radius:2px; margin-bottom:13px; }
+.rc-desc { font-size:12.5px; color:rgba(255,255,255,.6); line-height:1.65; font-weight:300; }
 
-  /* ── BOTÃO ADMIN ── */
-  .admin-toggle{position:fixed;bottom:20px;right:20px;width:48px;height:48px;border-radius:50%;background:var(--black);border:none;font-size:20px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);z-index:500;transition:transform .2s;}
-  .admin-toggle:hover{transform:scale(1.1);}
+/* ═══════════════════════════════════════════
+   BARRAS DE CONHECIMENTO
+═══════════════════════════════════════════ */
+.conhecimento-section {
+  background:var(--white); border:1.5px solid var(--grayb);
+  border-radius:var(--radius); padding:20px 18px;
+  margin-bottom:14px; text-align:left;
+  animation:fadeUp .5s ease both .55s;
+  box-shadow:var(--shadow);
+}
+.ks-title {
+  font-size:11px; font-weight:700; letter-spacing:1.5px;
+  text-transform:uppercase; color:var(--gd); margin-bottom:16px;
+}
+.kbar-row { margin-bottom:14px; }
+.kbar-row:last-child { margin-bottom:0; }
+.kbar-top  { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+.kbar-lbl  { font-size:13px; font-weight:500; color:var(--black); }
+.kbar-pct  { font-size:13px; font-weight:700; color:var(--gd); }
+.kbar-track { height:10px; background:var(--grayb); border-radius:100px; overflow:hidden; }
+.kbar-fill  {
+  height:100%; border-radius:100px;
+  background-size:200% 100%;
+  animation:gradMove 3s ease infinite;
+  transition:width 1.2s cubic-bezier(.22,1,.36,1);
+  width:0%;
+}
+@keyframes gradMove {
+  0%   { background-position:0% 50%; }
+  50%  { background-position:100% 50%; }
+  100% { background-position:0% 50%; }
+}
+.kbar-fill.verde  { background-image:linear-gradient(90deg,#7dcfa5,#1e6648,#45b07a); }
+.kbar-fill.azul   { background-image:linear-gradient(90deg,#5bafd4,#1a4d70,#4a9ec4); }
+.kbar-fill.amber  { background-image:linear-gradient(90deg,#f5c842,#b07d10,#e8b830); }
+.kbar-fill.coral  { background-image:linear-gradient(90deg,#f08060,#a03020,#e06040); }
 
-  /* ── PAINEL ADMIN ── */
-  .admin-panel{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:600;display:none;align-items:flex-end;justify-content:center;}
-  .admin-panel.open{display:flex;}
-  .admin-inner{background:var(--white);border-radius:24px 24px 0 0;width:100%;max-width:480px;padding:28px 24px 40px;max-height:85vh;overflow-y:auto;}
-  .admin-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;}
-  .admin-close{background:var(--gray);border:none;width:32px;height:32px;border-radius:50%;font-size:14px;cursor:pointer;}
+/* Indicador SGA */
+.sga-box {
+  background:linear-gradient(135deg,var(--black) 0%,#1a3028 100%);
+  border-radius:var(--radius); padding:20px 18px;
+  margin-bottom:14px; text-align:center;
+  animation:fadeUp .5s ease both .7s;
+  position:relative; overflow:hidden;
+}
+.sga-box::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(circle at 30% 50%,rgba(69,176,122,.12),transparent 60%);
+  pointer-events:none;
+}
+.sga-label { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:8px; }
+.sga-num   { font-family:'Playfair Display',serif; font-size:52px; font-weight:900; color:var(--white); line-height:1; margin-bottom:4px; }
+.sga-num span { font-size:24px; color:var(--gx); }
+.sga-desc  { font-size:12px; color:rgba(255,255,255,.45); line-height:1.6; margin-top:6px; }
+.sga-track { height:6px; background:rgba(255,255,255,.12); border-radius:100px; overflow:hidden; margin:14px 0 0; }
+.sga-fill  {
+  height:100%; border-radius:100px;
+  background:linear-gradient(90deg,var(--gx),var(--gl),var(--gd));
+  background-size:200% 100%;
+  animation:gradMove 3s ease infinite;
+  transition:width 1.4s cubic-bezier(.22,1,.36,1);
+  width:0%;
+}
 
-  .stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px;}
-  .stat-box{background:var(--gray);border-radius:14px;padding:14px 10px;text-align:center;}
-  .stat-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--gd);line-height:1;margin-bottom:4px;}
-  .stat-lbl{font-size:10px;color:var(--soft);}
+/* Dica */
+.tip-box {
+  background:var(--gp); border:1.5px solid var(--gl);
+  border-radius:var(--radius-sm); padding:15px 16px;
+  display:flex; gap:10px; align-items:flex-start;
+  margin-bottom:14px; text-align:left;
+  animation:fadeUp .5s ease both .82s;
+}
+.tip-icon { font-size:17px; flex-shrink:0; margin-top:2px; }
+.tip-box p { font-size:13px; color:var(--black); line-height:1.6; }
+.tip-box strong { color:var(--gd); }
 
-  .admin-section{margin-bottom:20px;}
-  .admin-section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--soft);margin-bottom:12px;}
+/* ISO */
+.iso-note {
+  border-left:3px solid var(--gm); padding:10px 14px;
+  background:var(--gray); border-radius:0 10px 10px 0;
+  font-size:11px; color:var(--soft); line-height:1.6;
+  text-align:left; margin-bottom:16px;
+  animation:fadeUp .5s ease both .9s;
+}
 
-  .bar-row{margin-bottom:10px;}
-  .bar-label{display:flex;justify-content:space-between;font-size:12px;color:var(--black);margin-bottom:5px;font-weight:500;}
-  .bar-track{height:8px;background:var(--grayb);border-radius:10px;overflow:hidden;}
-  .bar-fill{height:100%;border-radius:10px;transition:width .6s ease;}
-  .bar-fill.green{background:linear-gradient(90deg,var(--gl),var(--gd));}
-  .bar-fill.silver{background:linear-gradient(90deg,#c8c8c8,#888);}
-  .bar-fill.bronze{background:linear-gradient(90deg,#e8a84a,var(--bronze-b));}
+/* Countdown */
+.countdown-bar {
+  background:var(--gray); border-radius:var(--radius-sm);
+  padding:12px 16px; text-align:center;
+  font-size:12px; color:var(--soft);
+  animation:fadeUp .4s ease both 1s;
+  margin-bottom:8px;
+}
+.countdown-track { height:3px; background:var(--grayb); border-radius:100px; overflow:hidden; margin-top:8px; }
+.countdown-fill  { height:100%; background:var(--gm); border-radius:100px; transition:width 1s linear; }
 
-  .resp-item{background:var(--gray);border-radius:12px;padding:12px 14px;margin-bottom:8px;}
-  .resp-q{font-size:11px;font-weight:600;color:var(--gd);margin-bottom:4px;}
-  .resp-a{font-size:13px;color:var(--black);}
-  .resp-pct{font-size:11px;color:var(--soft);margin-top:2px;}
-
-  .admin-note{font-size:11px;color:#aaa;line-height:1.6;margin-top:16px;padding:12px 14px;background:var(--gray);border-radius:10px;}
-  .btn-zerar{width:100%;padding:11px;border:1.5px solid var(--grayb);border-radius:12px;background:transparent;font-size:12px;color:#aaa;cursor:pointer;margin-top:4px;font-family:'DM Sans',sans-serif;}
-  .btn-zerar:hover{border-color:#f44;color:#f44;}
+/* Confetti */
+.confetti-wrap { position:fixed; top:0; left:0; right:0; pointer-events:none; z-index:999; }
+.cp { position:absolute; border-radius:2px; animation:fall linear forwards; }
+@keyframes fall { from{transform:translateY(-10px) rotate(0deg);opacity:1} to{transform:translateY(105vh) rotate(800deg);opacity:0} }
 </style>
 </head>
 <body>
 
 <!-- HEADER -->
-<div class="header">
+<header class="site-header">
   <div class="logo-row">
-    <svg class="logo-diamond" viewBox="0 0 80 80" fill="none">
+    <svg class="logo-svg" viewBox="0 0 80 80" fill="none">
       <defs>
-        <linearGradient id="gMain" x1="8" y1="8" x2="72" y2="72" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#52c896"/><stop offset="100%" stop-color="#1f6b45"/>
+        <linearGradient id="gLogo" x1="8" y1="8" x2="72" y2="72" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#45b07a"/><stop offset="100%" stop-color="#1e6648"/>
         </linearGradient>
       </defs>
-      <polygon points="40,12 68,40 40,68 12,40" fill="#b0b0b0" opacity=".18" transform="translate(5,5)"/>
-      <polygon points="40,12 68,40 40,68 12,40" fill="#b0b0b0" opacity=".18" transform="translate(3.5,3.5)"/>
-      <polygon points="40,12 68,40 40,68 12,40" fill="#b0b0b0" opacity=".22" transform="translate(2,2)"/>
-      <polygon points="40,12 68,40 40,68 12,40" fill="#b0b0b0" opacity=".28" transform="translate(.8,.8)"/>
-      <polygon points="40,10 70,40 40,70 10,40" fill="url(#gMain)"/>
+      <polygon points="40,12 68,40 40,68 12,40" fill="#aaa" opacity=".18" transform="translate(5,5)"/>
+      <polygon points="40,12 68,40 40,68 12,40" fill="#aaa" opacity=".22" transform="translate(2.5,2.5)"/>
+      <polygon points="40,10 70,40 40,70 10,40" fill="url(#gLogo)"/>
       <text x="26" y="55" font-family="Georgia,serif" font-size="32" font-weight="bold" fill="white" opacity=".95">F</text>
     </svg>
     <div>
@@ -191,459 +401,544 @@
       <div class="logo-sub">Indústria de Papel</div>
     </div>
   </div>
+  <div class="hashtag-pill">#FernandezPeloClima</div>
+</header>
 
-  <!-- Mascote animado -->
-  <div class="mascote-wrap">
-    <svg class="mascote-svg" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-      <rect x="36" y="103" width="17" height="30" rx="5" fill="#c8924a"/>
-      <rect x="67" y="103" width="17" height="30" rx="5" fill="#c8924a"/>
-      <rect x="8"  y="71"  width="20" height="13" rx="6" fill="#c8924a"/>
-      <rect x="92" y="71"  width="20" height="13" rx="6" fill="#c8924a"/>
-      <rect x="28" y="68"  width="64" height="44" rx="7" fill="#d4a05a"/>
-      <polygon points="55,68 65,68 63,96 57,96" fill="#4dbfb0"/>
-      <polygon points="53,68 67,68 65,79 55,79" fill="#68d4c4"/>
-      <line x1="57" y1="72" x2="63" y2="72" stroke="white" stroke-width="1.3" opacity=".55"/>
-      <line x1="57" y1="76" x2="63" y2="76" stroke="white" stroke-width="1.3" opacity=".55"/>
-      <rect x="18" y="14" width="84" height="60" rx="9" fill="#d4a05a"/>
-      <rect x="18" y="14" width="84" height="11" rx="9" fill="#b8823a" opacity=".28"/>
-      <rect x="90" y="20" width="12" height="54" rx="4" fill="#b8823a" opacity=".18"/>
-      <g class="eye-l"><ellipse cx="46" cy="41" rx="11" ry="12" fill="white"/><ellipse cx="46" cy="42" rx="6.5" ry="7.5" fill="#3d2408"/><ellipse cx="48.5" cy="39" rx="2.8" ry="2.8" fill="white" opacity=".85"/></g>
-      <g class="eye-r"><ellipse cx="74" cy="41" rx="11" ry="12" fill="white"/><ellipse cx="74" cy="42" rx="6.5" ry="7.5" fill="#3d2408"/><ellipse cx="76.5" cy="39" rx="2.8" ry="2.8" fill="white" opacity=".85"/></g>
-      <path d="M37 26 Q46 21 53 25" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-      <path d="M67 25 Q74 21 83 26" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-      <ellipse cx="60" cy="55" rx="3.5" ry="2.2" fill="#b8823a" opacity=".45"/>
-      <path d="M44 62 Q60 74 76 62" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-    </svg>
-  </div>
+<div class="wrap">
 
-  <div class="hashtag">#FernandezPeloClima</div>
-  <h1>Qual é o<br><span>seu impacto?</span></h1>
-  <p>4 perguntas rápidas. Descubra<br>seu impacto ambiental na fábrica.</p>
-</div>
+<!-- ═══════════════════════════════════
+     TELA 0: INÍCIO
+═══════════════════════════════════ -->
+<div class="screen active" id="screen-0">
+  <div class="hero">
 
-<div class="container">
-
-  <!-- TELA 1: Coleta -->
-  <div class="screen active" id="screen-1">
-    <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-    <div class="step-label">1 de 4</div>
-    <div class="question-card">
-      <span class="q-emoji">🗑️</span>
-      <div class="q-num">Pergunta 01</div>
-      <div class="q-text">Quando você vai jogar algo fora na fábrica, o que costuma fazer?</div>
-      <div class="options">
-        <button class="option-btn" onclick="pick(this,'coleta',0)"><span class="opt-icon">✅</span> Identifico o resíduo e jogo na lixeira correta sempre</button>
-        <button class="option-btn" onclick="pick(this,'coleta',3)"><span class="opt-icon">🤔</span> Tento separar, mas nem sempre tenho certeza do destino certo</button>
-        <button class="option-btn" onclick="pick(this,'coleta',5)"><span class="opt-icon">😬</span> Jogo na lixeira mais próxima — não sei bem qual é a certa</button>
-        <button class="option-btn" onclick="pick(this,'coleta',7)"><span class="opt-icon">❓</span> Nunca parei pra pensar nisso</button>
-      </div>
-    </div>
-    <button class="btn-next" id="btn1" style="display:none" onclick="go(2)">Próxima →</button>
-  </div>
-
-  <!-- TELA 2: Água -->
-  <div class="screen" id="screen-2">
-    <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
-    <div class="step-label">2 de 4</div>
-    <div class="question-card">
-      <span class="q-emoji">💧</span>
-      <div class="q-num">Pergunta 02</div>
-      <div class="q-text">Se você visse um vazamento de água no seu setor agora, o que faria?</div>
-      <div class="options">
-        <button class="option-btn" onclick="pick(this,'agua',0)"><span class="opt-icon">🚨</span> Comunicaria imediatamente e já tentaria conter</button>
-        <button class="option-btn" onclick="pick(this,'agua',3)"><span class="opt-icon">📢</span> Avisaria alguém responsável assim que possível</button>
-        <button class="option-btn" onclick="pick(this,'agua',5)"><span class="opt-icon">🕐</span> Esperaria alguém ver e reportar — não é minha função</button>
-        <button class="option-btn" onclick="pick(this,'agua',7)"><span class="opt-icon">😶</span> Não saberia para quem reportar</button>
-      </div>
-    </div>
-    <button class="btn-next" id="btn2" style="display:none" onclick="go(3)">Próxima →</button>
-  </div>
-
-  <!-- TELA 3: Proatividade -->
-  <div class="screen" id="screen-3">
-    <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
-    <div class="step-label">3 de 4</div>
-    <div class="question-card">
-      <span class="q-emoji">🌱</span>
-      <div class="q-num">Pergunta 03</div>
-      <div class="q-text">Quando você percebe um colega fazendo algo que prejudica o meio ambiente na fábrica, o que acontece?</div>
-      <div class="options">
-        <button class="option-btn" onclick="pick(this,'proativo',0)"><span class="opt-icon">💬</span> Converso com ele e explico o impacto daquilo</button>
-        <button class="option-btn" onclick="pick(this,'proativo',3)"><span class="opt-icon">🤷</span> Penso em falar, mas acabo não falando</button>
-        <button class="option-btn" onclick="pick(this,'proativo',5)"><span class="opt-icon">🙈</span> Faço minha parte e deixo o resto pra lá</button>
-        <button class="option-btn" onclick="pick(this,'proativo',7)"><span class="opt-icon">😅</span> Não me sinto seguro para abordar o assunto</button>
-      </div>
-    </div>
-    <button class="btn-next" id="btn3" style="display:none" onclick="go(4)">Próxima →</button>
-  </div>
-
-  <!-- TELA 4: Conhecimento -->
-  <div class="screen" id="screen-4">
-    <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
-    <div class="step-label">4 de 4</div>
-    <div class="question-card">
-      <span class="q-emoji">📋</span>
-      <div class="q-num">Pergunta 04</div>
-      <div class="q-text">Você sabe quais são os principais impactos ambientais do seu setor na fábrica?</div>
-      <div class="options">
-        <button class="option-btn" onclick="pick(this,'conhecimento',0)"><span class="opt-icon">🎯</span> Sim, conheço bem e sei o que posso fazer a respeito</button>
-        <button class="option-btn" onclick="pick(this,'conhecimento',3)"><span class="opt-icon">💡</span> Tenho uma ideia, mas poderia saber mais</button>
-        <button class="option-btn" onclick="pick(this,'conhecimento',5)"><span class="opt-icon">🔍</span> Nunca me explicaram direito sobre isso</button>
-        <button class="option-btn" onclick="pick(this,'conhecimento',7)"><span class="opt-icon">❓</span> Não faço ideia por onde começar</button>
-      </div>
-    </div>
-    <button class="btn-next" id="btn4" style="display:none" onclick="calcResult()">Ver meu resultado →</button>
-  </div>
-
-  <!-- RESULTADO -->
-  <div class="screen" id="screen-result">
-
-    <!-- Mascote com chapéu -->
-    <div class="result-mascote">
-      <svg class="mascote-svg" viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg">
-        <rect x="36" y="110" width="17" height="30" rx="5" fill="#c8924a"/>
-        <rect x="67" y="110" width="17" height="30" rx="5" fill="#c8924a"/>
-        <rect x="8"  y="76"  width="20" height="13" rx="6" fill="#c8924a"/>
-        <rect x="92" y="76"  width="20" height="13" rx="6" fill="#c8924a"/>
-        <rect x="28" y="74"  width="64" height="44" rx="7" fill="#d4a05a"/>
-        <polygon points="55,74 65,74 63,100 57,100" fill="#4dbfb0"/>
-        <polygon points="53,74 67,74 65,84 55,84" fill="#68d4c4"/>
-        <rect x="18" y="20" width="84" height="60" rx="9" fill="#d4a05a"/>
-        <rect x="18" y="20" width="84" height="11" rx="9" fill="#b8823a" opacity=".28"/>
-        <ellipse cx="46" cy="46" rx="11" ry="12" fill="white"/><ellipse cx="46" cy="47" rx="6.5" ry="7.5" fill="#3d2408"/><ellipse cx="48.5" cy="44" rx="2.8" ry="2.8" fill="white" opacity=".85"/>
-        <ellipse cx="74" cy="46" rx="11" ry="12" fill="white"/><ellipse cx="74" cy="47" rx="6.5" ry="7.5" fill="#3d2408"/><ellipse cx="76.5" cy="44" rx="2.8" ry="2.8" fill="white" opacity=".85"/>
-        <path d="M37 30 Q46 25 53 29" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-        <path d="M67 29 Q74 25 83 30" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-        <path d="M43 66 Q60 80 77 66" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-        <!-- Chapéu verde Fernandez -->
-        <rect x="22" y="16" width="76" height="8" rx="3" fill="#2a7a5a"/>
-        <polygon points="60,2 98,18 22,18" fill="#3aaa7a"/>
-        <line x1="90" y1="12" x2="96" y2="24" stroke="#52c896" stroke-width="2.2"/>
-        <circle cx="96" cy="26" r="3.5" fill="#52c896"/>
+    <div class="mascote-hero">
+      <svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+        <rect x="36" y="103" width="17" height="30" rx="5" fill="#c8924a"/>
+        <rect x="67" y="103" width="17" height="30" rx="5" fill="#c8924a"/>
+        <rect x="8"  y="71"  width="20" height="13" rx="6" fill="#c8924a"/>
+        <rect x="92" y="71"  width="20" height="13" rx="6" fill="#c8924a"/>
+        <rect x="28" y="68"  width="64" height="44" rx="7" fill="#d4a05a"/>
+        <polygon points="55,68 65,68 63,96 57,96" fill="#4dbfb0"/>
+        <polygon points="53,68 67,68 65,79 55,79" fill="#68d4c4"/>
+        <line x1="57" y1="72" x2="63" y2="72" stroke="white" stroke-width="1.3" opacity=".55"/>
+        <line x1="57" y1="76" x2="63" y2="76" stroke="white" stroke-width="1.3" opacity=".55"/>
+        <rect x="18" y="14" width="84" height="60" rx="9" fill="#d4a05a"/>
+        <rect x="18" y="14" width="84" height="11" rx="9" fill="#b8823a" opacity=".28"/>
+        <rect x="90" y="20" width="12" height="54" rx="4" fill="#b8823a" opacity=".18"/>
+        <g class="eye-l"><ellipse cx="46" cy="41" rx="11" ry="12" fill="white"/><ellipse cx="46" cy="42" rx="6.5" ry="7.5" fill="#3d2408"/><ellipse cx="48.5" cy="39" rx="2.8" ry="2.8" fill="white" opacity=".85"/></g>
+        <g class="eye-r"><ellipse cx="74" cy="41" rx="11" ry="12" fill="white"/><ellipse cx="74" cy="42" rx="6.5" ry="7.5" fill="#3d2408"/><ellipse cx="76.5" cy="39" rx="2.8" ry="2.8" fill="white" opacity=".85"/></g>
+        <path d="M37 26 Q46 21 53 25" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+        <path d="M67 25 Q74 21 83 26" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+        <ellipse cx="60" cy="55" rx="3.5" ry="2.2" fill="#b8823a" opacity=".45"/>
+        <path d="M44 62 Q60 74 76 62" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
       </svg>
     </div>
 
-    <!-- SELO com círculo bronze/prata/ouro -->
-    <div class="selo-wrap">
-      <div class="selo-circle" id="res-selo-circle">
-        <span class="selo-emoji" id="res-emoji"></span>
-        <span class="selo-tier" id="res-selo-label"></span>
-      </div>
+    <div class="hero-tag">Semana do Meio Ambiente 2026</div>
+    <h1>Qual é o seu<br><em>impacto?</em></h1>
+    <p>Teste seus conhecimentos sobre meio ambiente e descubra o seu nível de aderência ao Sistema de Gestão Ambiental da Fernandez.</p>
+
+    <div class="setor-wrap">
+      <label class="setor-label" for="setor-select">Seu setor *</label>
+      <select class="setor-select" id="setor-select">
+        <option value="">Selecione seu setor</option>
+        <option value="Administrativo">Administrativo</option>
+        <option value="Producao Papel">Produção Papel</option>
+        <option value="Almoxarifado">Almoxarifado</option>
+        <option value="Qualidade">Qualidade</option>
+        <option value="Onduladeira">Onduladeira</option>
+        <option value="Logistica">Logística</option>
+        <option value="Manutencao">Manutenção</option>
+        <option value="Engenharia PCM">Engenharia/Projetos/PCM</option>
+      </select>
+      <div class="setor-error" id="setor-error">Por favor, selecione seu setor para continuar.</div>
     </div>
 
-    <!-- Card preto com descrição -->
-    <div class="badge-card">
-      <div class="badge-f">
-        <svg width="44" height="44" viewBox="0 0 80 80">
-          <defs><linearGradient id="gB" x1="10" y1="10" x2="70" y2="70"><stop offset="0%" stop-color="#52c896"/><stop offset="100%" stop-color="#1f6b45"/></linearGradient></defs>
-          <polygon points="40,10 70,40 40,70 10,40" fill="url(#gB)"/>
-          <text x="26" y="53" font-family="Georgia,serif" font-size="30" font-weight="bold" fill="white">F</text>
-        </svg>
-      </div>
-      <div class="badge-title" id="res-name"></div>
-      <div class="badge-sub"   id="res-sub"></div>
-      <div class="badge-div"></div>
-      <div class="badge-desc"  id="res-desc"></div>
-    </div>
+    <button class="btn-start" onclick="startQuiz()">Vamos começar? →</button>
 
-    <div class="impact-grid" id="impact-grid"></div>
-
-    <div class="tip-box">
-      <span class="tip-icon">💡</span>
-      <p id="res-tip"></p>
-    </div>
-
-    <div class="iso-note" id="res-iso"></div>
-
-    <button class="btn-restart" onclick="restart()">↩ Refazer o desafio</button>
-
-    <div class="fonte-nota">
-      * Referências: IBÁ (2022), ABTCP. Consumo médio: 25 m³ de água/tonelada de papel produzida.<br>
-      Um vazamento não reportado pode desperdiçar centenas de litros por turno.
-    </div>
-  </div>
-
-</div><!-- /container -->
-
-<div class="confetti-wrap" id="confetti"></div>
-
-<!-- BOTÃO PAINEL -->
-<button class="admin-toggle" onclick="toggleAdmin()" title="Painel de estatísticas">📊</button>
-
-<!-- PAINEL ADMIN -->
-<div class="admin-panel" id="adminPanel" onclick="closeOnBg(event)">
-  <div class="admin-inner">
-    <div class="admin-title">
-      Painel de Respostas
-      <button class="admin-close" onclick="toggleAdmin()">✕</button>
-    </div>
-
-    <div class="stat-row">
-      <div class="stat-box"><div class="stat-num" id="adm-total">0</div><div class="stat-lbl">respostas totais</div></div>
-      <div class="stat-box"><div class="stat-num" id="adm-hoje">0</div><div class="stat-lbl">hoje</div></div>
-      <div class="stat-box"><div class="stat-num" id="adm-top" style="font-size:20px">—</div><div class="stat-lbl">selo mais comum</div></div>
-    </div>
-
-    <div class="admin-section">
-      <div class="admin-section-title">🏅 Distribuição de Selos</div>
-      <div class="bar-row">
-        <div class="bar-label"><span>🌳 Guardião Verde — Ouro</span><span id="adm-ouro-n">0</span></div>
-        <div class="bar-track"><div class="bar-fill green" id="adm-ouro-bar" style="width:0%"></div></div>
-      </div>
-      <div class="bar-row">
-        <div class="bar-label"><span>🌿 Agente em Ação — Prata</span><span id="adm-prata-n">0</span></div>
-        <div class="bar-track"><div class="bar-fill silver" id="adm-prata-bar" style="width:0%"></div></div>
-      </div>
-      <div class="bar-row">
-        <div class="bar-label"><span>🌱 Semente de Mudança — Bronze</span><span id="adm-bronze-n">0</span></div>
-        <div class="bar-track"><div class="bar-fill bronze" id="adm-bronze-bar" style="width:0%"></div></div>
-      </div>
-    </div>
-
-    <div class="admin-section">
-      <div class="admin-section-title">📋 Resposta mais votada por pergunta</div>
-      <div id="adm-respostas"></div>
-    </div>
-
-    <button class="btn-zerar" onclick="resetStats()">🗑 Zerar estatísticas</button>
-
-    <div class="admin-note">
-      ℹ️ Os dados são salvos neste dispositivo. Para consolidar respostas de vários celulares simultaneamente, a solução mais simples é integrar com Google Sheets — posso te ajudar a montar isso quando quiser.
+    <div class="info-chips">
+      <span class="chip">⏱ ~3 minutos</span>
+      <span class="chip">10 perguntas</span>
+      <span class="chip">Resultado instantâneo</span>
     </div>
   </div>
 </div>
 
+<!-- ═══════════════════════════════════
+     TELAS DE PERGUNTAS (geradas via JS)
+═══════════════════════════════════ -->
+<div class="screen" id="screen-quiz">
+  <div class="progress-header">
+    <span class="progress-label" id="prog-label">Pergunta 1 de 10</span>
+    <span class="progress-frac"  id="prog-frac">0%</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="prog-fill" style="width:0%"></div>
+  </div>
+  <div id="quiz-area"></div>
+</div>
+
+<!-- ═══════════════════════════════════
+     TELA DE RESULTADO
+═══════════════════════════════════ -->
+<div class="screen" id="screen-result">
+
+  <div class="mascote-result">
+    <svg viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg">
+      <rect x="36" y="110" width="17" height="30" rx="5" fill="#c8924a"/>
+      <rect x="67" y="110" width="17" height="30" rx="5" fill="#c8924a"/>
+      <rect x="8"  y="76"  width="20" height="13" rx="6" fill="#c8924a"/>
+      <rect x="92" y="76"  width="20" height="13" rx="6" fill="#c8924a"/>
+      <rect x="28" y="74"  width="64" height="44" rx="7" fill="#d4a05a"/>
+      <polygon points="55,74 65,74 63,100 57,100" fill="#4dbfb0"/>
+      <polygon points="53,74 67,74 65,84 55,84" fill="#68d4c4"/>
+      <rect x="18" y="20" width="84" height="60" rx="9" fill="#d4a05a"/>
+      <rect x="18" y="20" width="84" height="11" rx="9" fill="#b8823a" opacity=".28"/>
+      <ellipse cx="46" cy="46" rx="11" ry="12" fill="white"/><ellipse cx="46" cy="47" rx="6.5" ry="7.5" fill="#3d2408"/><ellipse cx="48.5" cy="44" rx="2.8" ry="2.8" fill="white" opacity=".85"/>
+      <ellipse cx="74" cy="46" rx="11" ry="12" fill="white"/><ellipse cx="74" cy="47" rx="6.5" ry="7.5" fill="#3d2408"/><ellipse cx="76.5" cy="44" rx="2.8" ry="2.8" fill="white" opacity=".85"/>
+      <path d="M37 30 Q46 25 53 29" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <path d="M67 29 Q74 25 83 30" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <path d="M43 66 Q60 80 77 66" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <rect x="22" y="16" width="76" height="8" rx="3" fill="#1e6648"/>
+      <polygon points="60,2 98,18 22,18" fill="#2d8a5e"/>
+      <line x1="90" y1="12" x2="96" y2="24" stroke="#45b07a" stroke-width="2.2"/>
+      <circle cx="96" cy="26" r="3.5" fill="#45b07a"/>
+    </svg>
+  </div>
+
+  <div class="selo-wrap">
+    <div class="selo-circle" id="res-circle">
+      <span class="selo-emoji" id="res-emoji"></span>
+      <span class="selo-tier"  id="res-tier"></span>
+    </div>
+    <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--black)" id="res-name"></div>
+  </div>
+
+  <div class="result-card">
+    <div class="rc-watermark">
+      <svg width="40" height="40" viewBox="0 0 80 80">
+        <defs><linearGradient id="gW" x1="10" y1="10" x2="70" y2="70"><stop offset="0%" stop-color="#45b07a"/><stop offset="100%" stop-color="#1e6648"/></linearGradient></defs>
+        <polygon points="40,10 70,40 40,70 10,40" fill="url(#gW)"/>
+        <text x="26" y="53" font-family="Georgia,serif" font-size="30" font-weight="bold" fill="white">F</text>
+      </svg>
+    </div>
+    <div class="rc-name" id="rc-name"></div>
+    <div class="rc-sub"  id="rc-sub"></div>
+    <div class="rc-div"></div>
+    <div class="rc-desc" id="rc-desc"></div>
+  </div>
+
+  <!-- BARRAS DE CONHECIMENTO POR TÓPICO -->
+  <div class="conhecimento-section">
+    <div class="ks-title">📊 Conhecimento por Tópico</div>
+    <div class="kbar-row">
+      <div class="kbar-top"><span class="kbar-lbl">Aspectos e Impactos Ambientais</span><span class="kbar-pct" id="pct-aspectos">0%</span></div>
+      <div class="kbar-track"><div class="kbar-fill verde" id="bar-aspectos"></div></div>
+    </div>
+    <div class="kbar-row">
+      <div class="kbar-top"><span class="kbar-lbl">Práticas e Gestão de Resíduos</span><span class="kbar-pct" id="pct-residuos">0%</span></div>
+      <div class="kbar-track"><div class="kbar-fill azul" id="bar-residuos"></div></div>
+    </div>
+    <div class="kbar-row">
+      <div class="kbar-top"><span class="kbar-lbl">ISO 14001 e SGA</span><span class="kbar-pct" id="pct-iso">0%</span></div>
+      <div class="kbar-track"><div class="kbar-fill amber" id="bar-iso"></div></div>
+    </div>
+    <div class="kbar-row">
+      <div class="kbar-top"><span class="kbar-lbl">Processos e Recursos Hídricos</span><span class="kbar-pct" id="pct-agua">0%</span></div>
+      <div class="kbar-track"><div class="kbar-fill coral" id="bar-agua"></div></div>
+    </div>
+  </div>
+
+  <!-- INDICADOR SGA -->
+  <div class="sga-box">
+    <div class="sga-label">Aderência Geral ao SGA</div>
+    <div class="sga-num"><span id="sga-pct">0</span><span>%</span></div>
+    <div class="sga-desc" id="sga-desc"></div>
+    <div class="sga-track"><div class="sga-fill" id="sga-bar"></div></div>
+  </div>
+
+  <div class="tip-box">
+    <span class="tip-icon">💡</span>
+    <p id="res-tip"></p>
+  </div>
+
+  <div class="iso-note" id="res-iso"></div>
+
+  <!-- COUNTDOWN -->
+  <div class="countdown-bar" id="countdown-box">
+    <span id="countdown-txt">O teste reinicia automaticamente em <strong id="countdown-num">60</strong>s</span>
+    <div class="countdown-track"><div class="countdown-fill" id="countdown-fill" style="width:100%"></div></div>
+  </div>
+
+</div><!-- /screen-result -->
+</div><!-- /wrap -->
+
+<div class="confetti-wrap" id="confetti"></div>
+
 <script>
-  // ── Estado da resposta atual ──
-  const ans = { coleta:-1, agua:-1, proativo:-1, conhecimento:-1 };
-  const btnIds = { coleta:'btn1', agua:'btn2', proativo:'btn3', conhecimento:'btn4' };
+// ═══════════════════════════════════════════
+// CONFIGURAÇÃO — https://script.google.com/macros/s/AKfycbzQx5kWtQotn96M92SSSZhmV1DwCoUyhJmd2poc52ksvnWxml1dAvCIYmZaArsZb6LLQQ/exec
+// ═══════════════════════════════════════════
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzQx5kWtQotn96M92SSSZhmV1DwCoUyhJmd2poc52ksvnWxml1dAvCIYmZaArsZb6LLQQ/exec";
 
-  const opLabels = {
-    coleta:      ['Sempre separa corretamente','Tenta mas tem dúvidas','Joga na mais próxima','Nunca parou pra pensar'],
-    agua:        ['Comunica imediatamente','Avisa assim que possível','Espera alguém reportar','Não sabe para quem reportar'],
-    proativo:    ['Conversa e explica','Pensa mas não fala','Faz sua parte e ignora','Não se sente seguro'],
-    conhecimento:['Conhece bem e sabe agir','Tem ideia, poderia saber mais','Nunca foi explicado','Não faz ideia']
+// ═══════════════════════════════════════════
+// BANCO DE PERGUNTAS
+// tópico: "aspectos" | "residuos" | "iso" | "agua"
+// correta: índice 0–3
+// ═══════════════════════════════════════════
+const PERGUNTAS = [
+  {
+    emoji: "🌿",
+    texto: "Qual destes é um exemplo de aspecto ambiental?",
+    opcoes: ["Jornada de trabalho","Consumo de água","Salário dos funcionários","Uniforme"],
+    correta: 1, topico: "aspectos"
+  },
+  {
+    emoji: "⚡",
+    texto: "O que a Fernandez fez para reduzir a emissão de CO₂?",
+    opcoes: ["Aumentou produção","Trocou empilhadeiras por elétricas","Reduziu funcionários","Parou processos"],
+    correta: 1, topico: "aspectos"
+  },
+  {
+    emoji: "♻️",
+    texto: "O reaproveitamento de materiais recicláveis contribui para:",
+    opcoes: ["Mais lixo","Economia circular","Aumento de poluição","Descarte maior"],
+    correta: 1, topico: "residuos"
+  },
+  {
+    emoji: "🗑️",
+    texto: "Qual cor geralmente identifica o coletor para resíduos contaminados com óleo (resíduo perigoso)?",
+    opcoes: ["Verde","Azul","Amarelo","Laranja"],
+    correta: 3, topico: "residuos"
+  },
+  {
+    emoji: "💧",
+    texto: "O maior consumo de água na produção de papel ocorre em qual etapa?",
+    opcoes: ["Transporte","Formação da folha","Armazenamento","Expedição"],
+    correta: 1, topico: "agua"
+  },
+  {
+    emoji: "📋",
+    texto: "Qual é o objetivo do DCA (Diálogo de Conscientização Ambiental)?",
+    opcoes: ["Aumentar produção","Conscientizar os colaboradores sobre questões ambientais","Reduzir custos","Controlar jornada de trabalho"],
+    correta: 1, topico: "iso"
+  },
+  {
+    emoji: "🏭",
+    texto: "Uma área com produto químico atende à ISO 14001 quando:",
+    opcoes: ["Possui apenas o produto armazenado","Atende requisitos como identificação, controle de riscos, prevenção de vazamentos e documentação","Está limpa","Não possui fiscalização"],
+    correta: 1, topico: "iso"
+  },
+  {
+    emoji: "🌊",
+    texto: "No processo de papel, o consumo de água é considerado:",
+    opcoes: ["Impacto ambiental","Aspecto ambiental","Problema","Resíduo"],
+    correta: 1, topico: "agua"
+  },
+  {
+    emoji: "📏",
+    texto: "Por que o medidor de vazão de água da captação do rio é importante?",
+    opcoes: ["Para controle interno apenas","Para atender exigências legais e garantir o controle da água captada","Para aumentar consumo","Para aumentar a produção de papel"],
+    correta: 1, topico: "agua"
+  },
+  {
+    emoji: "🌐",
+    texto: "O que é a ISO 14001?",
+    opcoes: ["Norma de gestão ambiental","Norma de segurança e saúde do trabalho","Norma de qualidade de produto","Norma relacionada ao valor do serviço"],
+    correta: 0, topico: "iso"
+  }
+];
+
+// ═══════════════════════════════════════════
+// ESTADO GLOBAL
+// ═══════════════════════════════════════════
+let setor = "";
+let qAtual = 0;
+let respostas = [];        // índice da opção escolhida por pergunta
+let countdownTimer = null;
+let countdownSec   = 60;
+
+// ═══════════════════════════════════════════
+// NAVEGAÇÃO
+// ═══════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+// ═══════════════════════════════════════════
+// INICIAR QUIZ
+// ═══════════════════════════════════════════
+function startQuiz() {
+  const sel = document.getElementById('setor-select');
+  const err = document.getElementById('setor-error');
+  if (!sel.value) {
+    sel.classList.add('error');
+    err.classList.add('show');
+    return;
+  }
+  sel.classList.remove('error');
+  err.classList.remove('show');
+  setor     = sel.value;
+  qAtual    = 0;
+  respostas = [];
+  renderPergunta();
+  showScreen('screen-quiz');
+}
+
+// ═══════════════════════════════════════════
+// RENDERIZAR PERGUNTA
+// ═══════════════════════════════════════════
+function renderPergunta() {
+  const q   = PERGUNTAS[qAtual];
+  const tot = PERGUNTAS.length;
+  const pct = Math.round((qAtual / tot) * 100);
+  const letras = ['A','B','C','D'];
+
+  document.getElementById('prog-label').textContent = `Pergunta ${qAtual+1} de ${tot}`;
+  document.getElementById('prog-frac').textContent  = pct + '%';
+  document.getElementById('prog-fill').style.width  = pct + '%';
+
+  document.getElementById('quiz-area').innerHTML = `
+    <div class="q-card" style="animation:fadeUp .4s ease both">
+      <div class="q-num">Pergunta ${String(qAtual+1).padStart(2,'0')}</div>
+      <span class="q-emoji">${q.emoji}</span>
+      <div class="q-text">${q.texto}</div>
+      <div class="options" id="opts">
+        ${q.opcoes.map((op,i) => `
+          <button class="opt" onclick="escolher(${i})" id="opt-${i}">
+            <span class="opt-letter">${letras[i]}</span>
+            ${op}
+          </button>
+        `).join('')}
+      </div>
+    </div>
+    <button class="btn-next" id="btn-prox" style="display:none" onclick="proxima()">
+      ${qAtual < tot-1 ? 'Próxima →' : 'Ver resultado →'}
+    </button>
+  `;
+}
+
+// ═══════════════════════════════════════════
+// ESCOLHER OPÇÃO
+// ═══════════════════════════════════════════
+function escolher(i) {
+  respostas[qAtual] = i;
+  document.querySelectorAll('.opt').forEach((b,idx) => {
+    b.classList.toggle('selected', idx === i);
+  });
+  document.getElementById('btn-prox').style.display = 'block';
+}
+
+// ═══════════════════════════════════════════
+// PRÓXIMA PERGUNTA
+// ═══════════════════════════════════════════
+function proxima() {
+  if (qAtual < PERGUNTAS.length - 1) {
+    qAtual++;
+    renderPergunta();
+  } else {
+    calcularResultado();
+  }
+}
+
+// ═══════════════════════════════════════════
+// CALCULAR RESULTADO
+// ═══════════════════════════════════════════
+function calcularResultado() {
+  // Acertos por tópico
+  const topicos = { aspectos:[], residuos:[], iso:[], agua:[] };
+  PERGUNTAS.forEach((q, i) => topicos[q.topico].push(respostas[i] === q.correta ? 1 : 0));
+
+  const pct = obj => {
+    if (!obj.length) return 0;
+    return Math.round((obj.reduce((a,b)=>a+b,0) / obj.length) * 100);
   };
-  const qLabels = ['🗑️ Coleta seletiva','💧 Vazamento de água','🌱 Proatividade','📋 Conhecimento de impactos'];
-  const scoreMap = { 0:0, 3:1, 5:2, 7:3 }; // valor → índice da opção
 
-  // ── Interação ──
-  function pick(btn, key, val) {
-    ans[key] = val;
-    btn.closest('.options').querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    const nb = document.getElementById(btnIds[key]);
-    if (nb) nb.style.display = 'block';
+  const pAspectos = pct(topicos.aspectos);
+  const pResiduos = pct(topicos.residuos);
+  const pIso      = pct(topicos.iso);
+  const pAgua     = pct(topicos.agua);
+
+  // Total de acertos
+  const acertos = PERGUNTAS.filter((q,i) => respostas[i] === q.correta).length;
+  const pGeral  = Math.round((acertos / PERGUNTAS.length) * 100);
+
+  // SGA: teto de 75% — conformidade plena exige sistema maduro e auditado
+  const pSGA = Math.min(Math.round(pGeral * 0.75), 75);
+
+  // Definir selo
+  let seloClass, seloTier, seloEmoji, seloNome, rcNome, rcSub, rcDesc, tip, isoTxt;
+
+  if (pGeral >= 80) {
+    seloClass='selo-ouro';   seloTier='OURO';   seloEmoji='🌳'; seloNome='Guardião Verde';
+    rcNome = 'Parabéns, Guardião Verde!';
+    rcSub  = 'Seu conhecimento ambiental está acima da média!';
+    rcDesc = 'Você demonstra domínio sólido sobre os temas ambientais da Fernandez — de aspectos e impactos a requisitos da ISO 14001. Perfis como o seu são fundamentais para a consolidação do nosso SGA.';
+    tip    = '<strong>Desafio extra:</strong> Compartilhe o que aprendeu com colegas do seu setor. Multiplicadores como você aceleram a implementação da ISO 14001.';
+    isoTxt = '📋 ISO 14001 | Cláusula 7.3 — Consciência: colaboradores com alto nível de conhecimento são a base do sistema de gestão ambiental eficaz.';
+    confettiEffect();
+  } else if (pGeral >= 50) {
+    seloClass='selo-prata';  seloTier='PRATA';  seloEmoji='🌿'; seloNome='Agente em Ação';
+    rcNome = 'Você está no caminho certo!';
+    rcSub  = 'Bom conhecimento com espaço para crescer.';
+    rcDesc = 'Você acertou a maioria dos temas ambientais essenciais. Com um pouco mais de aprofundamento nos pontos de atenção, você chegará ao nível Guardião Verde.';
+    tip    = '<strong>Próximo passo:</strong> Converse com a equipe de Meio Ambiente sobre os tópicos onde teve mais dúvidas. A prática diária é o melhor treinamento.';
+    isoTxt = '📋 ISO 14001 | Cláusula 6.2 — Objetivos ambientais: o desenvolvimento contínuo de competências alimenta as metas do sistema de gestão.';
+  } else {
+    seloClass='selo-bronze'; seloTier='BRONZE'; seloEmoji='🌱'; seloNome='Semente de Mudança';
+    rcNome = 'Toda jornada começa aqui!';
+    rcSub  = 'Você deu o primeiro passo — e isso importa.';
+    rcDesc = 'Participar já é um ato de comprometimento com o meio ambiente. Os temas abordados neste quiz fazem parte da nossa rotina na Fernandez, e conhecê-los bem faz diferença no dia a dia.';
+    tip    = '<strong>Por onde começar?</strong> Fique atento às comunicações da equipe de Meio Ambiente e participe dos treinamentos do SGA. Cada ação conta!';
+    isoTxt = '📋 ISO 14001 | Cláusula 10.3 — Melhoria contínua: reconhecer onde estamos é o ponto de partida para qualquer evolução real.';
   }
 
-  function go(n) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById('screen-' + n).classList.add('active');
-    window.scrollTo({ top:0, behavior:'smooth' });
-  }
+  // SGA desc
+  let sgaDesc = '';
+  if (pSGA >= 60)      sgaDesc = 'Excelente aderência ao Sistema de Gestão Ambiental.';
+  else if (pSGA >= 40) sgaDesc = 'Boa base — aprofundamento nos requisitos da norma irá ampliar sua contribuição.';
+  else                 sgaDesc = 'Há oportunidade de crescimento no entendimento do SGA. Os treinamentos internos podem ajudar muito.';
 
-  // ── Cálculo do resultado ──
-  function calcResult() {
-    const score = ans.coleta + ans.agua + ans.proativo + ans.conhecimento;
+  // Aplicar no DOM
+  const circle = document.getElementById('res-circle');
+  circle.className = 'selo-circle ' + seloClass;
+  document.getElementById('res-emoji').textContent = seloEmoji;
+  document.getElementById('res-tier').textContent  = seloTier;
+  document.getElementById('res-name').textContent  = seloNome;
+  document.getElementById('rc-name').textContent   = rcNome;
+  document.getElementById('rc-sub').textContent    = rcSub;
+  document.getElementById('rc-desc').textContent   = rcDesc;
+  document.getElementById('res-tip').innerHTML     = tip;
+  document.getElementById('res-iso').textContent   = isoTxt;
+  document.getElementById('sga-desc').textContent  = sgaDesc;
 
-    const resKg = ans.coleta === 0 ? 0 : ans.coleta === 3 ? 18 : ans.coleta === 5 ? 52 : 80;
-    const aguaL = ans.agua   === 0 ? 0 : ans.agua   === 3 ? 2400 : ans.agua   === 5 ? 14400 : 28800;
-    const col   = ans.proativo === 0 ? 5 : ans.proativo === 3 ? 2 : 0;
+  showScreen('screen-result');
 
-    // ISO 14001: teto de 75% — conformidade plena exige sistema maduro, auditoria e evidências documentadas
-    const conf = ans.conhecimento === 0 ? 75 : ans.conhecimento === 3 ? 50 : ans.conhecimento === 5 ? 25 : 8;
+  // Animar barras com delay
+  setTimeout(() => {
+    animarBarra('bar-aspectos', 'pct-aspectos', pAspectos);
+    animarBarra('bar-residuos', 'pct-residuos', pResiduos);
+    animarBarra('bar-iso',      'pct-iso',      pIso);
+    animarBarra('bar-agua',     'pct-agua',     pAgua);
+    animarSGA(pSGA);
+  }, 300);
 
-    let emoji, name, sub, desc, tip, iso, seloClass, seloLabel, seloKey;
+  // Enviar para Sheets
+  enviarSheets(seloTier, pGeral, pAspectos, pResiduos, pIso, pAgua, pSGA);
 
-    if (score <= 6) {
-      emoji='🌳'; name='Guardião Verde'; seloClass='selo-ouro'; seloLabel='OURO'; seloKey='ouro';
-      sub  = 'Você já é um agente de mudança na Fernandez!';
-      desc = 'Este selo é para quem incorporou consciência ambiental no dia a dia: separa corretamente, age diante de riscos e influencia colegas. Exatamente o perfil multiplicador que a ISO 14001 valoriza.';
-      tip  = '<strong>Desafio extra:</strong> Compartilhe uma boa prática com a equipe de Meio Ambiente. Sua ideia pode virar procedimento oficial!';
-      iso  = '📋 ISO 14001 | Cláusula 7.3 — Consciência: colaboradores como você são a base de qualquer sistema de gestão ambiental eficaz. (Conformidade plena exige também processos documentados e auditados.)';
-      confettiEffect();
-    } else if (score <= 14) {
-      emoji='🌿'; name='Agente em Ação'; seloClass='selo-prata'; seloLabel='PRATA'; seloKey='prata';
-      sub  = 'Boa intenção tem. Hora de transformar em hábito!';
-      desc = 'O selo Agente em Ação reconhece quem já entende a importância, mas ainda encontra barreiras na prática. Um passo de cada vez — e você chega ao Guardião Verde.';
-      tip  = '<strong>Próximo passo:</strong> Descubra quem é o ponto focal de Meio Ambiente do seu setor. Ter esse contato já muda tudo na hora de agir.';
-      iso  = '📋 ISO 14001 | Cláusula 6.2 — Objetivos ambientais: metas individuais consistentes alimentam as metas coletivas do sistema de gestão.';
-    } else {
-      emoji='🌱'; name='Semente de Mudança'; seloClass='selo-bronze'; seloLabel='BRONZE'; seloKey='bronze';
-      sub  = 'Reconhecer é o primeiro passo. Você já deu!';
-      desc = 'Este selo é para quem está começando a enxergar seu papel na questão ambiental. Responder já demonstra abertura — e é disso que a Fernandez precisa para crescer junto.';
-      tip  = '<strong>Por onde começar?</strong> Na próxima vez que for jogar algo fora, olhe as lixeiras por um segundo a mais. Essa pausa vale muito.';
-      iso  = '📋 ISO 14001 | Cláusula 10.3 — Melhoria contínua: toda grande transformação começa com o reconhecimento honesto do ponto de partida.';
+  // Countdown 60s
+  iniciarCountdown();
+}
+
+// ═══════════════════════════════════════════
+// ANIMAÇÃO BARRAS
+// ═══════════════════════════════════════════
+function animarBarra(barId, pctId, valor) {
+  const bar = document.getElementById(barId);
+  const lbl = document.getElementById(pctId);
+  setTimeout(() => {
+    bar.style.width = valor + '%';
+    // Animar número
+    let atual = 0;
+    const step = setInterval(() => {
+      atual = Math.min(atual + 2, valor);
+      lbl.textContent = atual + '%';
+      if (atual >= valor) clearInterval(step);
+    }, 20);
+  }, 100);
+}
+
+function animarSGA(valor) {
+  const bar = document.getElementById('sga-bar');
+  const num = document.getElementById('sga-pct');
+  setTimeout(() => {
+    bar.style.width = valor + '%';
+    let atual = 0;
+    const step = setInterval(() => {
+      atual = Math.min(atual + 1, valor);
+      num.textContent = atual;
+      if (atual >= valor) clearInterval(step);
+    }, 25);
+  }, 200);
+}
+
+// ═══════════════════════════════════════════
+// COUNTDOWN E RESET
+// ═══════════════════════════════════════════
+function iniciarCountdown() {
+  countdownSec = 60;
+  const fill = document.getElementById('countdown-fill');
+  const num  = document.getElementById('countdown-num');
+
+  if (countdownTimer) clearInterval(countdownTimer);
+
+  countdownTimer = setInterval(() => {
+    countdownSec--;
+    num.textContent = countdownSec;
+    fill.style.width = (countdownSec / 60 * 100) + '%';
+    if (countdownSec <= 0) {
+      clearInterval(countdownTimer);
+      resetarTudo();
     }
+  }, 1000);
+}
 
-    // Aplica no DOM
-    const circle = document.getElementById('res-selo-circle');
-    circle.className = 'selo-circle ' + seloClass;
-    document.getElementById('res-emoji').textContent     = emoji;
-    document.getElementById('res-selo-label').textContent = seloLabel;
-    document.getElementById('res-name').textContent  = name;
-    document.getElementById('res-sub').textContent   = sub;
-    document.getElementById('res-desc').textContent  = desc;
-    document.getElementById('res-tip').innerHTML     = tip;
-    document.getElementById('res-iso').textContent   = iso;
+function resetarTudo() {
+  document.getElementById('setor-select').value = '';
+  document.getElementById('setor-select').classList.remove('error');
+  document.getElementById('setor-error').classList.remove('show');
+  qAtual    = 0;
+  respostas = [];
+  setor     = "";
+  showScreen('screen-0');
+}
 
-    document.getElementById('impact-grid').innerHTML = `
-      <div class="ic full dark">
-        <div class="ic-num">${resKg} kg</div>
-        <div class="ic-lbl">resíduo desviado da coleta correta por ano*</div>
-      </div>
-      <div class="ic">
-        <div class="ic-num">${aguaL.toLocaleString('pt-BR')} L</div>
-        <div class="ic-lbl">água desperdiçada por<br>vazamentos não reportados*</div>
-      </div>
-      <div class="ic">
-        <div class="ic-num">${col}</div>
-        <div class="ic-lbl">colegas que você<br>pode influenciar hoje</div>
-      </div>
-      <div class="ic full">
-        <div class="ic-num">${conf}%</div>
-        <div class="ic-lbl">de alinhamento estimado com os requisitos da ISO 14001<br><span style="font-size:10px;color:#aaa">(100% exige sistema documentado, auditado e em maturidade)</span></div>
-      </div>
-    `;
-
-    // Salva estatísticas local + envia para Google Sheets
-    saveStats(seloKey);
-    enviarParaSheets(seloKey);
-    go('result');
-  }
-
-
-  // ── GOOGLE SHEETS INTEGRATION ──
-  // Cole aqui a URL gerada pelo Google Apps Script após publicar o Web App
-  const SHEETS_URL = "https://script.google.com/macros/s/AKfycbyksi_crjX-MDgkHJIxwoE0kIS-lUSyO9bqRy12bc0DP9j_5EifQLRHQQRvBumDm6o12A/exec";
-
-  async function enviarParaSheets(seloKey) {
-    if (!SHEETS_URL || SHEETS_URL === "COLE_SUA_URL_AQUI") return;
-    try {
-      await fetch(SHEETS_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          selo:         seloKey,
-          coleta:       ans.coleta,
-          agua:         ans.agua,
-          proativo:     ans.proativo,
-          conhecimento: ans.conhecimento
-        })
-      });
-    } catch(e) {
-      console.log("Sheets indisponível — dado salvo apenas localmente.");
-    }
-  }
-
-  // ── ESTATÍSTICAS (localStorage) ──
-  function loadStats() {
-    try { return JSON.parse(localStorage.getItem('fz_stats')) || defaultStats(); }
-    catch { return defaultStats(); }
-  }
-  function defaultStats() {
-    return {
-      total: 0,
-      hoje: 0,
-      diaAtual: '',
-      selos: { ouro:0, prata:0, bronze:0 },
-      respostas: {
-        coleta:       [0,0,0,0],
-        agua:         [0,0,0,0],
-        proativo:     [0,0,0,0],
-        conhecimento: [0,0,0,0]
-      }
-    };
-  }
-  function saveStats(seloKey) {
-    const st = loadStats();
-    const hoje = new Date().toISOString().slice(0,10);
-    if (st.diaAtual !== hoje) { st.hoje = 0; st.diaAtual = hoje; }
-    st.total++;
-    st.hoje++;
-    st.selos[seloKey]++;
-    // registra índice da resposta escolhida
-    ['coleta','agua','proativo','conhecimento'].forEach(k => {
-      const idx = scoreMap[ans[k]] ?? 0;
-      st.respostas[k][idx]++;
+// ═══════════════════════════════════════════
+// GOOGLE SHEETS
+// ═══════════════════════════════════════════
+async function enviarSheets(selo, pGeral, pAspectos, pResiduos, pIso, pAgua, pSGA) {
+  if (!SHEETS_URL || SHEETS_URL === "https://script.google.com/macros/s/AKfycbw6p03QBQWLAQrvBp0r_yW3Hre-fKOzjGnwIftSrXlQes2KWXMWtzq-rgt8ssjIvbqXyA/exec") return;
+  try {
+    await fetch(SHEETS_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        setor,
+        selo,
+        acertos_total:    pGeral,
+        pct_aspectos:     pAspectos,
+        pct_residuos:     pResiduos,
+        pct_iso:          pIso,
+        pct_agua:         pAgua,
+        pct_sga:          pSGA,
+        respostas:        respostas.join(',')
+      })
     });
-    localStorage.setItem('fz_stats', JSON.stringify(st));
+  } catch(e) {
+    console.log("Sheets indisponível — dado não enviado.");
   }
-  function resetStats() {
-    if (confirm('Zerar todas as estatísticas?')) {
-      localStorage.removeItem('fz_stats');
-      renderAdmin();
-    }
+}
+
+// ═══════════════════════════════════════════
+// CONFETTI
+// ═══════════════════════════════════════════
+function confettiEffect() {
+  const cols = ['#1e6648','#45b07a','#7dcfa5','#c9a227','#ffffff','#d4a05a'];
+  const wrap = document.getElementById('confetti');
+  wrap.innerHTML = '';
+  for (let i = 0; i < 80; i++) {
+    const p = document.createElement('div');
+    p.className = 'cp';
+    const s = 5 + Math.random() * 9;
+    p.style.cssText = `left:${Math.random()*100}%;width:${s}px;height:${s}px;background:${cols[Math.floor(Math.random()*cols.length)]};border-radius:${Math.random()>.5?'50%':'2px'};animation-name:fall;animation-duration:${1.5+Math.random()*2.5}s;animation-delay:${Math.random()*.9}s;`;
+    wrap.appendChild(p);
   }
-
-  // ── PAINEL ADMIN ──
-  function toggleAdmin() {
-    const p = document.getElementById('adminPanel');
-    if (p.classList.contains('open')) { p.classList.remove('open'); }
-    else { renderAdmin(); p.classList.add('open'); }
-  }
-  function closeOnBg(e) { if (e.target === document.getElementById('adminPanel')) toggleAdmin(); }
-
-  function renderAdmin() {
-    const st = loadStats();
-    const tot = st.total || 1; // evita divisão por zero
-
-    document.getElementById('adm-total').textContent = st.total;
-    document.getElementById('adm-hoje').textContent  = st.hoje;
-
-    // Selo mais comum
-    const tops = Object.entries(st.selos).sort((a,b)=>b[1]-a[1]);
-    const topLabel = { ouro:'🌳 Ouro', prata:'🌿 Prata', bronze:'🌱 Bronze' };
-    document.getElementById('adm-top').textContent = st.total > 0 ? topLabel[tops[0][0]] : '—';
-
-    // Barras de selos
-    ['ouro','prata','bronze'].forEach(k => {
-      const n = st.selos[k];
-      const pct = st.total > 0 ? Math.round(n / st.total * 100) : 0;
-      document.getElementById('adm-' + k + '-n').textContent   = n + ' (' + pct + '%)';
-      document.getElementById('adm-' + k + '-bar').style.width = pct + '%';
-    });
-
-    // Respostas mais votadas por pergunta
-    const keys = ['coleta','agua','proativo','conhecimento'];
-    const html = keys.map((k, qi) => {
-      const votes = st.respostas[k];
-      const maxV  = Math.max(...votes);
-      const maxI  = votes.indexOf(maxV);
-      const pct   = st.total > 0 ? Math.round(maxV / st.total * 100) : 0;
-      const label = opLabels[k][maxI] || '—';
-      return `<div class="resp-item">
-        <div class="resp-q">${qLabels[qi]}</div>
-        <div class="resp-a">${maxI >= 0 ? label : '—'}</div>
-        <div class="resp-pct">${st.total > 0 ? maxV + ' voto(s) · ' + pct + '% dos participantes' : 'Sem dados ainda'}</div>
-      </div>`;
-    }).join('');
-    document.getElementById('adm-respostas').innerHTML = html;
-  }
-
-  // ── CONFETTI ──
-  function confettiEffect() {
-    const cols = ['#2a7a5a','#52c896','#111','#ffd700','#d4a05a','#fff'];
-    const wrap = document.getElementById('confetti');
-    wrap.innerHTML = '';
-    for (let i = 0; i < 80; i++) {
-      const p = document.createElement('div');
-      p.className = 'cp';
-      const s = 5 + Math.random() * 9;
-      p.style.cssText = `left:${Math.random()*100}%;width:${s}px;height:${s}px;background:${cols[Math.floor(Math.random()*cols.length)]};border-radius:${Math.random()>.5?'50%':'2px'};animation-name:fall;animation-duration:${1.4+Math.random()*2.5}s;animation-delay:${Math.random()*.9}s;`;
-      wrap.appendChild(p);
-    }
-    setTimeout(() => wrap.innerHTML = '', 5000);
-  }
-
-  // ── RESTART ──
-  function restart() {
-    Object.keys(ans).forEach(k => ans[k] = -1);
-    document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-    ['btn1','btn2','btn3','btn4'].forEach(id => { const el=document.getElementById(id); if(el) el.style.display='none'; });
-    go(1);
-  }
+  setTimeout(() => wrap.innerHTML = '', 5000);
+}
 </script>
 </body>
 </html>
