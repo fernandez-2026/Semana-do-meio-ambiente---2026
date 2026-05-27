@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qual é o seu impacto? | Fernandez</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   VARIÁVEIS E RESET
+═══════════════════════════════════════════ */
+:root {
+  --gd: #1e6648; --gm: #2d8a5e; --gl: #45b07a; --gx: #7dcfa5;
+  --gp: #eaf6ef; --gpp: #d0edd9;
+  --black: #0e1a14; --white: #ffffff;
+  --gray: #f4f6f5; --grayb: #dde8e2; --soft: #5a7060;
+  --bronze: #c47b2b; --bronze-l: #f5deb3;
+  --silver: #8e9ba0; --silver-l: #dde8ec;
+  --gold: #c9a227; --gold-l: #fff3c4;
+  --radius: 18px; --radius-sm: 12px;
+  --shadow: 0 4px 24px rgba(14,26,20,.10);
+  --shadow-lg: 0 12px 48px rgba(14,26,20,.16);
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════
+   HEADER FIXO
+═══════════════════════════════════════════ */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--grayb);
+  padding: 12px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo-row { display:flex; align-items:center; gap:10px; }
+.logo-svg  { width:36px; height:36px; flex-shrink:0; }
+.logo-name { font-family:'Playfair Display',serif; font-size:17px; font-weight:900; color:var(--black); line-height:1; }
+.logo-sub  { font-size:7.5px; letter-spacing:2.5px; text-transform:uppercase; color:var(--soft); margin-top:2px; }
+.hashtag-pill {
+  background: var(--gp); border:1.5px solid var(--gl);
+  color:var(--gd); font-size:10px; font-weight:600; letter-spacing:.6px;
+  padding:4px 12px; border-radius:100px;
+}
+
+/* ═══════════════════════════════════════════
+   WRAPPER CENTRAL
+═══════════════════════════════════════════ */
+.wrap { max-width:500px; margin:0 auto; padding:20px 18px 60px; }
+
+/* ═══════════════════════════════════════════
+   TELAS
+═══════════════════════════════════════════ */
+.screen { display:none; animation: fadeUp .45s ease both; }
+.screen.active { display:block; }
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(18px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ═══════════════════════════════════════════
+   TELA INICIAL
+═══════════════════════════════════════════ */
+.hero {
+  text-align: center;
+  padding: 8px 0 24px;
+}
+.mascote-hero {
+  display:flex; justify-content:center;
+  margin-bottom: 16px;
+  animation: mascIn .8s cubic-bezier(.175,.885,.32,1.275) both .2s;
+}
+@keyframes mascIn {
+  from { opacity:0; transform:translateY(20px) scale(.85); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
+}
+.mascote-hero svg {
+  width:110px; height:126px;
+  animation: sway 4s ease-in-out infinite 1.2s;
+  transform-origin: bottom center;
+}
+@keyframes sway { 0%,100%{transform:rotate(-4deg)} 50%{transform:rotate(4deg)} }
+.eye-l { animation:blink 5s ease-in-out infinite .4s; transform-origin:46px 41px; }
+.eye-r { animation:blink 5s ease-in-out infinite .9s; transform-origin:74px 41px; }
+@keyframes blink { 0%,88%,100%{transform:scaleY(1)} 93%{transform:scaleY(.08)} }
+
+.hero-tag {
+  display:inline-block;
+  background: linear-gradient(135deg, var(--gd), var(--gl));
+  color:var(--white); font-size:10px; font-weight:700;
+  letter-spacing:1.5px; text-transform:uppercase;
+  padding:5px 16px; border-radius:100px; margin-bottom:14px;
+}
+.hero h1 {
+  font-family:'Playfair Display',serif;
+  font-size:32px; font-weight:900; line-height:1.1;
+  color:var(--black); margin-bottom:10px;
+}
+.hero h1 em { color:var(--gd); font-style:normal; }
+.hero p {
+  font-size:14px; color:var(--soft); line-height:1.65;
+  font-weight:300; margin-bottom:28px;
+}
+
+/* Select de setor */
+.setor-wrap { margin-bottom:20px; }
+.setor-label {
+  display:block; font-size:12px; font-weight:600;
+  color:var(--gd); letter-spacing:1px; text-transform:uppercase;
+  margin-bottom:8px;
+}
+.setor-select {
+  width:100%; padding:14px 18px;
+  background:var(--gray); border:2px solid var(--grayb);
+  border-radius:var(--radius-sm);
+  font-family:'DM Sans',sans-serif; font-size:15px; color:var(--black);
+  appearance:none; -webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232d8a5e' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 16px center;
+  cursor:pointer; transition:border-color .2s, box-shadow .2s;
+}
+.setor-select:focus { outline:none; border-color:var(--gm); box-shadow:0 0 0 3px rgba(45,138,94,.15); }
+.setor-select.error { border-color:#e05555; box-shadow:0 0 0 3px rgba(224,85,85,.12); }
+.setor-error { display:none; font-size:12px; color:#e05555; margin-top:6px; }
+.setor-error.show { display:block; }
+
+.btn-start {
+  width:100%; padding:17px;
+  background:linear-gradient(135deg, var(--gm), var(--gd));
+  border:none; border-radius:var(--radius);
+  color:var(--white); font-family:'DM Sans',sans-serif;
+  font-size:16px; font-weight:600; letter-spacing:.3px;
+  cursor:pointer; transition:all .25s;
+  box-shadow:0 6px 24px rgba(30,102,72,.3);
+}
+.btn-start:hover {
+  transform:translateY(-2px);
+  box-shadow:0 10px 32px rgba(30,102,72,.4);
+}
+.btn-start:active { transform:translateY(0); }
+
+/* Chips de info */
+.info-chips { display:flex; gap:8px; justify-content:center; margin-top:20px; flex-wrap:wrap; }
+.chip {
+  background:var(--gp); border:1px solid var(--gpp);
+  color:var(--gd); font-size:11px; font-weight:500;
+  padding:5px 12px; border-radius:100px;
+}
+
+/* ═══════════════════════════════════════════
+   PROGRESS BAR
+═══════════════════════════════════════════ */
+.progress-header {
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:8px;
+}
+.progress-label { font-size:11px; color:var(--soft); font-weight:500; }
+.progress-frac  { font-size:11px; color:var(--soft); }
+.progress-track {
+  height:4px; background:var(--grayb); border-radius:10px;
+  overflow:hidden; margin-bottom:20px;
+}
+.progress-fill {
+  height:100%;
+  background:linear-gradient(90deg, var(--gx), var(--gd));
+  border-radius:10px; transition:width .5s ease;
+}
+
+/* ═══════════════════════════════════════════
+   CARD DE PERGUNTA
+═══════════════════════════════════════════ */
+.q-card {
+  background:var(--white); border:1.5px solid var(--grayb);
+  border-radius:var(--radius); padding:24px 20px;
+  box-shadow:var(--shadow);
+}
+.q-num  { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gm); margin-bottom:8px; }
+.q-emoji { font-size:30px; display:block; margin-bottom:10px; }
+.q-text { font-size:16px; font-weight:500; line-height:1.5; color:var(--black); margin-bottom:20px; }
+
+/* Opções */
+.options { display:flex; flex-direction:column; gap:9px; }
+.opt {
+  background:var(--gray); border:1.5px solid transparent;
+  border-radius:var(--radius-sm); padding:13px 16px;
+  font-family:'DM Sans',sans-serif; font-size:14px; color:var(--black);
+  text-align:left; cursor:pointer; transition:all .18s;
+  display:flex; align-items:center; gap:12px; line-height:1.35;
+}
+.opt-letter {
+  width:26px; height:26px; border-radius:50%;
+  background:var(--grayb); color:var(--soft);
+  font-size:12px; font-weight:700; display:flex;
+  align-items:center; justify-content:center; flex-shrink:0;
+  transition:all .18s;
+}
+.opt:hover { background:var(--gp); border-color:var(--gl); transform:translateX(3px); }
+.opt:hover .opt-letter { background:var(--gl); color:var(--white); }
+.opt.selected { background:var(--gp); border-color:var(--gd); color:var(--gd); font-weight:500; }
+.opt.selected .opt-letter { background:var(--gd); color:var(--white); }
+
+/* Botão próxima */
+.btn-next {
+  width:100%; margin-top:16px; padding:15px;
+  background:var(--gd); border:none; border-radius:var(--radius);
+  color:var(--white); font-family:'DM Sans',sans-serif;
+  font-size:14px; font-weight:600; cursor:pointer;
+  transition:all .2s; box-shadow:0 4px 18px rgba(30,102,72,.22);
+}
+.btn-next:hover { background:var(--gm); transform:translateY(-2px); box-shadow:0 8px 28px rgba(30,102,72,.3); }
+
+/* ═══════════════════════════════════════════
+   TELA DE RESULTADO
+═══════════════════════════════════════════ */
+#screen-result { text-align:center; }
+
+/* Mascote resultado */
+.mascote-result {
+  display:flex; justify-content:center; margin-bottom:14px;
+  animation: popIn .7s cubic-bezier(.175,.885,.32,1.275) both .1s;
+}
+@keyframes popIn { from{opacity:0;transform:scale(.5) rotate(-8deg)} to{opacity:1;transform:scale(1) rotate(0)} }
+.mascote-result svg { width:88px; height:100px; }
+
+/* Selo */
+.selo-wrap { display:flex; flex-direction:column; align-items:center; margin-bottom:20px; }
+.selo-circle {
+  width:128px; height:128px; border-radius:50%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  position:relative; margin-bottom:10px;
+  animation: popIn .7s cubic-bezier(.175,.885,.32,1.275) both .25s;
+}
+.selo-circle::before {
+  content:''; position:absolute; inset:-8px; border-radius:50%;
+  border:3px solid transparent; animation:spinRing 8s linear infinite;
+}
+@keyframes spinRing { to{transform:rotate(360deg)} }
+
+.selo-ouro   { background:radial-gradient(circle at 35% 35%,#fff3a0,var(--gold) 55%,#a07800); box-shadow:0 0 0 5px var(--gold-l),0 0 0 8px var(--gold),0 10px 36px rgba(201,162,39,.45); }
+.selo-ouro::before   { border-top-color:var(--gold); border-right-color:var(--gold-l); }
+.selo-prata  { background:radial-gradient(circle at 35% 35%,#ecf0f1,var(--silver) 55%,#5a6a70); box-shadow:0 0 0 5px var(--silver-l),0 0 0 8px var(--silver),0 10px 36px rgba(142,155,160,.4); }
+.selo-prata::before  { border-top-color:var(--silver); border-right-color:var(--silver-l); }
+.selo-bronze { background:radial-gradient(circle at 35% 35%,#f5deb3,var(--bronze) 55%,#8b4513); box-shadow:0 0 0 5px var(--bronze-l),0 0 0 8px var(--bronze),0 10px 36px rgba(196,123,43,.4); }
+.selo-bronze::before { border-top-color:var(--bronze); border-right-color:var(--bronze-l); }
+
+.selo-emoji { font-size:44px; line-height:1; }
+.selo-tier  { font-family:'Playfair Display',serif; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-top:3px; }
+.selo-ouro   .selo-tier { color:#7a5c00; }
+.selo-prata  .selo-tier { color:#4a5a60; }
+.selo-bronze .selo-tier { color:#7a3a10; }
+
+/* Card preto */
+.result-card {
+  background:var(--black); border-radius:var(--radius);
+  padding:24px 20px 20px; margin-bottom:16px;
+  position:relative; overflow:hidden;
+  animation:fadeUp .5s ease both .4s;
+  text-align:left;
+}
+.result-card::after {
+  content:''; position:absolute; top:-60px; right:-60px;
+  width:180px; height:180px;
+  background:radial-gradient(circle,rgba(69,176,122,.15) 0%,transparent 70%);
+  pointer-events:none;
+}
+.rc-watermark { position:absolute; top:14px; right:16px; opacity:.1; }
+.rc-name { font-family:'Playfair Display',serif; font-size:22px; font-weight:900; color:var(--white); margin-bottom:5px; }
+.rc-sub  { font-size:13px; color:rgba(255,255,255,.5); font-weight:300; line-height:1.55; margin-bottom:14px; }
+.rc-div  { height:1.5px; background:linear-gradient(90deg,var(--gl),transparent); border-radius:2px; margin-bottom:13px; }
+.rc-desc { font-size:12.5px; color:rgba(255,255,255,.6); line-height:1.65; font-weight:300; }
+
+/* ═══════════════════════════════════════════
+   BARRAS DE CONHECIMENTO
+═══════════════════════════════════════════ */
+.conhecimento-section {
+  background:var(--white); border:1.5px solid var(--grayb);
+  border-radius:var(--radius); padding:20px 18px;
+  margin-bottom:14px; text-align:left;
+  animation:fadeUp .5s ease both .55s;
+  box-shadow:var(--shadow);
+}
+.ks-title {
+  font-size:11px; font-weight:700; letter-spacing:1.5px;
+  text-transform:uppercase; color:var(--gd); margin-bottom:16px;
+}
+.kbar-row { margin-bottom:14px; }
+.kbar-row:last-child { margin-bottom:0; }
+.kbar-top  { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+.kbar-lbl  { font-size:13px; font-weight:500; color:var(--black); }
+.kbar-pct  { font-size:13px; font-weight:700; color:var(--gd); }
+.kbar-track { height:10px; background:var(--grayb); border-radius:100px; overflow:hidden; }
+.kbar-fill  {
+  height:100%; border-radius:100px;
+  background-size:200% 100%;
+  animation:gradMove 3s ease infinite;
+  transition:width 1.2s cubic-bezier(.22,1,.36,1);
+  width:0%;
+}
+@keyframes gradMove {
+  0%   { background-position:0% 50%; }
+  50%  { background-position:100% 50%; }
+  100% { background-position:0% 50%; }
+}
+.kbar-fill.verde  { background-image:linear-gradient(90deg,#7dcfa5,#1e6648,#45b07a); }
+.kbar-fill.azul   { background-image:linear-gradient(90deg,#5bafd4,#1a4d70,#4a9ec4); }
+.kbar-fill.amber  { background-image:linear-gradient(90deg,#f5c842,#b07d10,#e8b830); }
+.kbar-fill.coral  { background-image:linear-gradient(90deg,#f08060,#a03020,#e06040); }
+
+/* Indicador SGA */
+.sga-box {
+  background:linear-gradient(135deg,var(--black) 0%,#1a3028 100%);
+  border-radius:var(--radius); padding:20px 18px;
+  margin-bottom:14px; text-align:center;
+  animation:fadeUp .5s ease both .7s;
+  position:relative; overflow:hidden;
+}
+.sga-box::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(circle at 30% 50%,rgba(69,176,122,.12),transparent 60%);
+  pointer-events:none;
+}
+.sga-label { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:8px; }
+.sga-num   { font-family:'Playfair Display',serif; font-size:52px; font-weight:900; color:var(--white); line-height:1; margin-bottom:4px; }
+.sga-num span { font-size:24px; color:var(--gx); }
+.sga-desc  { font-size:12px; color:rgba(255,255,255,.45); line-height:1.6; margin-top:6px; }
+.sga-track { height:6px; background:rgba(255,255,255,.12); border-radius:100px; overflow:hidden; margin:14px 0 0; }
+.sga-fill  {
+  height:100%; border-radius:100px;
+  background:linear-gradient(90deg,var(--gx),var(--gl),var(--gd));
+  background-size:200% 100%;
+  animation:gradMove 3s ease infinite;
+  transition:width 1.4s cubic-bezier(.22,1,.36,1);
+  width:0%;
+}
+
+/* Dica */
+.tip-box {
+  background:var(--gp); border:1.5px solid var(--gl);
+  border-radius:var(--radius-sm); padding:15px 16px;
+  display:flex; gap:10px; align-items:flex-start;
+  margin-bottom:14px; text-align:left;
+  animation:fadeUp .5s ease both .82s;
+}
+.tip-icon { font-size:17px; flex-shrink:0; margin-top:2px; }
+.tip-box p { font-size:13px; color:var(--black); line-height:1.6; }
+.tip-box strong { color:var(--gd); }
+
+/* ISO */
+.iso-note {
+  border-left:3px solid var(--gm); padding:10px 14px;
+  background:var(--gray); border-radius:0 10px 10px 0;
+  font-size:11px; color:var(--soft); line-height:1.6;
+  text-align:left; margin-bottom:16px;
+  animation:fadeUp .5s ease both .9s;
+}
+
+/* Countdown */
+.countdown-bar {
+  background:var(--gray); border-radius:var(--radius-sm);
+  padding:12px 16px; text-align:center;
+  font-size:12px; color:var(--soft);
+  animation:fadeUp .4s ease both 1s;
+  margin-bottom:8px;
+}
+.countdown-track { height:3px; background:var(--grayb); border-radius:100px; overflow:hidden; margin-top:8px; }
+.countdown-fill  { height:100%; background:var(--gm); border-radius:100px; transition:width 1s linear; }
+
+/* Confetti */
+.confetti-wrap { position:fixed; top:0; left:0; right:0; pointer-events:none; z-index:999; }
+.cp { position:absolute; border-radius:2px; animation:fall linear forwards; }
+@keyframes fall { from{transform:translateY(-10px) rotate(0deg);opacity:1} to{transform:translateY(105vh) rotate(800deg);opacity:0} }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo-row">
+    <svg class="logo-svg" viewBox="0 0 80 80" fill="none">
+      <defs>
+        <linearGradient id="gLogo" x1="8" y1="8" x2="72" y2="72" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#45b07a"/><stop offset="100%" stop-color="#1e6648"/>
+        </linearGradient>
+      </defs>
+      <polygon points="40,12 68,40 40,68 12,40" fill="#aaa" opacity=".18" transform="translate(5,5)"/>
+      <polygon points="40,12 68,40 40,68 12,40" fill="#aaa" opacity=".22" transform="translate(2.5,2.5)"/>
+      <polygon points="40,10 70,40 40,70 10,40" fill="url(#gLogo)"/>
+      <text x="26" y="55" font-family="Georgia,serif" font-size="32" font-weight="bold" fill="white" opacity=".95">F</text>
+    </svg>
+    <div>
+      <div class="logo-name">Fernandez</div>
+      <div class="logo-sub">Indústria de Papel</div>
+    </div>
+  </div>
+  <div class="hashtag-pill">#FernandezPeloClima</div>
+</header>
+
+<div class="wrap">
+
+<!-- ═══════════════════════════════════
+     TELA 0: INÍCIO
+═══════════════════════════════════ -->
+<div class="screen active" id="screen-0">
+  <div class="hero">
+
+    <div class="mascote-hero">
+      <svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+        <rect x="36" y="103" width="17" height="30" rx="5" fill="#c8924a"/>
+        <rect x="67" y="103" width="17" height="30" rx="5" fill="#c8924a"/>
+        <rect x="8"  y="71"  width="20" height="13" rx="6" fill="#c8924a"/>
+        <rect x="92" y="71"  width="20" height="13" rx="6" fill="#c8924a"/>
+        <rect x="28" y="68"  width="64" height="44" rx="7" fill="#d4a05a"/>
+        <polygon points="55,68 65,68 63,96 57,96" fill="#4dbfb0"/>
+        <polygon points="53,68 67,68 65,79 55,79" fill="#68d4c4"/>
+        <line x1="57" y1="72" x2="63" y2="72" stroke="white" stroke-width="1.3" opacity=".55"/>
+        <line x1="57" y1="76" x2="63" y2="76" stroke="white" stroke-width="1.3" opacity=".55"/>
+        <rect x="18" y="14" width="84" height="60" rx="9" fill="#d4a05a"/>
+        <rect x="18" y="14" width="84" height="11" rx="9" fill="#b8823a" opacity=".28"/>
+        <rect x="90" y="20" width="12" height="54" rx="4" fill="#b8823a" opacity=".18"/>
+        <g class="eye-l"><ellipse cx="46" cy="41" rx="11" ry="12" fill="white"/><ellipse cx="46" cy="42" rx="6.5" ry="7.5" fill="#3d2408"/><ellipse cx="48.5" cy="39" rx="2.8" ry="2.8" fill="white" opacity=".85"/></g>
+        <g class="eye-r"><ellipse cx="74" cy="41" rx="11" ry="12" fill="white"/><ellipse cx="74" cy="42" rx="6.5" ry="7.5" fill="#3d2408"/><ellipse cx="76.5" cy="39" rx="2.8" ry="2.8" fill="white" opacity=".85"/></g>
+        <path d="M37 26 Q46 21 53 25" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+        <path d="M67 25 Q74 21 83 26" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+        <ellipse cx="60" cy="55" rx="3.5" ry="2.2" fill="#b8823a" opacity=".45"/>
+        <path d="M44 62 Q60 74 76 62" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div class="hero-tag">Semana do Meio Ambiente 2026</div>
+    <h1>Qual é o seu<br><em>impacto?</em></h1>
+    <p>Teste seus conhecimentos sobre meio ambiente e descubra o seu nível de aderência ao Sistema de Gestão Ambiental da Fernandez.</p>
+
+    <div class="setor-wrap">
+      <label class="setor-label" for="setor-select">Seu setor *</label>
+      <select class="setor-select" id="setor-select">
+        <option value="">Selecione seu setor</option>
+        <option value="Producao Papel">Produção Papel</option>
+        <option value="Producao Chapa">Produção Chapa</option>
+        <option value="PCP Papel">PCP - Papel</option>
+        <option value="PCP Onduladeira">PCP - Onduladeira</option>
+        <option value="Engenharia Quimica">Engenharia Química</option>
+        <option value="SESMT">SESMT</option>
+        <option value="Meio Ambiente">Meio Ambiente</option>
+        <option value="Faturamento">Faturamento</option>
+        <option value="Fiscal">Fiscal</option>
+        <option value="Financeiro">Financeiro</option>
+        <option value="Recursos Humanos">Recursos Humanos</option>
+        <option value="Tecnologia da Informacao">Tecnologia da Informação</option>
+        <option value="Contabilidade">Contabilidade</option>
+        <option value="Comercial">Comercial</option>
+        <option value="Suprimentos">Suprimentos</option>
+        <option value="Compras Aparas">Compras Aparas</option>
+        <option value="Almoxarifado">Almoxarifado</option>
+        <option value="Qualidade">Qualidade</option>
+        <option value="Logistica">Logística</option>
+        <option value="Expedicao">Expedição</option>
+        <option value="Manutencao Mecanica Papel">Manutenção Mecânica - Papel</option>
+        <option value="Manutencao Onduladeira">Manutenção - Onduladeira</option>
+        <option value="Manutencao Eletrica Papel">Manutenção Elétrica - Papel</option>
+        <option value="Manutencao Predial">Manutenção Predial</option>
+        <option value="Engenharia PCM">Engenharia/PCM</option>
+      </select>
+      <div class="setor-error" id="setor-error">Por favor, selecione seu setor para continuar.</div>
+    </div>
+
+    <button class="btn-start" onclick="startQuiz()">Vamos começar? →</button>
+
+    <div class="info-chips">
+      <span class="chip">⏱ ~3 minutos</span>
+      <span class="chip">10 perguntas</span>
+      <span class="chip">Resultado instantâneo</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     TELAS DE PERGUNTAS (geradas via JS)
+═══════════════════════════════════ -->
+<div class="screen" id="screen-quiz">
+  <div class="progress-header">
+    <span class="progress-label" id="prog-label">Pergunta 1 de 10</span>
+    <span class="progress-frac"  id="prog-frac">0%</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="prog-fill" style="width:0%"></div>
+  </div>
+  <div id="quiz-area"></div>
+</div>
+
+<!-- ═══════════════════════════════════
+     TELA DE RESULTADO
+═══════════════════════════════════ -->
+<div class="screen" id="screen-result">
+
+  <div class="mascote-result">
+    <svg viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg">
+      <rect x="36" y="110" width="17" height="30" rx="5" fill="#c8924a"/>
+      <rect x="67" y="110" width="17" height="30" rx="5" fill="#c8924a"/>
+      <rect x="8"  y="76"  width="20" height="13" rx="6" fill="#c8924a"/>
+      <rect x="92" y="76"  width="20" height="13" rx="6" fill="#c8924a"/>
+      <rect x="28" y="74"  width="64" height="44" rx="7" fill="#d4a05a"/>
+      <polygon points="55,74 65,74 63,100 57,100" fill="#4dbfb0"/>
+      <polygon points="53,74 67,74 65,84 55,84" fill="#68d4c4"/>
+      <rect x="18" y="20" width="84" height="60" rx="9" fill="#d4a05a"/>
+      <rect x="18" y="20" width="84" height="11" rx="9" fill="#b8823a" opacity=".28"/>
+      <ellipse cx="46" cy="46" rx="11" ry="12" fill="white"/><ellipse cx="46" cy="47" rx="6.5" ry="7.5" fill="#3d2408"/><ellipse cx="48.5" cy="44" rx="2.8" ry="2.8" fill="white" opacity=".85"/>
+      <ellipse cx="74" cy="46" rx="11" ry="12" fill="white"/><ellipse cx="74" cy="47" rx="6.5" ry="7.5" fill="#3d2408"/><ellipse cx="76.5" cy="44" rx="2.8" ry="2.8" fill="white" opacity=".85"/>
+      <path d="M37 30 Q46 25 53 29" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <path d="M67 29 Q74 25 83 30" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <path d="M43 66 Q60 80 77 66" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <rect x="22" y="16" width="76" height="8" rx="3" fill="#1e6648"/>
+      <polygon points="60,2 98,18 22,18" fill="#2d8a5e"/>
+      <line x1="90" y1="12" x2="96" y2="24" stroke="#45b07a" stroke-width="2.2"/>
+      <circle cx="96" cy="26" r="3.5" fill="#45b07a"/>
+    </svg>
+  </div>
+
+  <div class="selo-wrap">
+    <div class="selo-circle" id="res-circle">
+      <span class="selo-emoji" id="res-emoji"></span>
+      <span class="selo-tier"  id="res-tier"></span>
+    </div>
+    <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--black)" id="res-name"></div>
+  </div>
+
+  <div class="result-card">
+    <div class="rc-watermark">
+      <svg width="40" height="40" viewBox="0 0 80 80">
+        <defs><linearGradient id="gW" x1="10" y1="10" x2="70" y2="70"><stop offset="0%" stop-color="#45b07a"/><stop offset="100%" stop-color="#1e6648"/></linearGradient></defs>
+        <polygon points="40,10 70,40 40,70 10,40" fill="url(#gW)"/>
+        <text x="26" y="53" font-family="Georgia,serif" font-size="30" font-weight="bold" fill="white">F</text>
+      </svg>
+    </div>
+    <div class="rc-name" id="rc-name"></div>
+    <div class="rc-sub"  id="rc-sub"></div>
+    <div class="rc-div"></div>
+    <div class="rc-desc" id="rc-desc"></div>
+  </div>
+
+  <!-- BARRAS DE CONHECIMENTO POR TÓPICO -->
+  <div class="conhecimento-section">
+    <div class="ks-title">📊 Conhecimento por Tópico</div>
+    <div class="kbar-row">
+      <div class="kbar-top"><span class="kbar-lbl">Aspectos e Impactos Ambientais</span><span class="kbar-pct" id="pct-aspectos">0%</span></div>
+      <div class="kbar-track"><div class="kbar-fill verde" id="bar-aspectos"></div></div>
+    </div>
+    <div class="kbar-row">
+      <div class="kbar-top"><span class="kbar-lbl">Práticas e Gestão de Resíduos</span><span class="kbar-pct" id="pct-residuos">0%</span></div>
+      <div class="kbar-track"><div class="kbar-fill azul" id="bar-residuos"></div></div>
+    </div>
+    <div class="kbar-row">
+      <div class="kbar-top"><span class="kbar-lbl">ISO 14001 e SGA</span><span class="kbar-pct" id="pct-iso">0%</span></div>
+      <div class="kbar-track"><div class="kbar-fill amber" id="bar-iso"></div></div>
+    </div>
+    <div class="kbar-row">
+      <div class="kbar-top"><span class="kbar-lbl">Processos e Recursos Hídricos</span><span class="kbar-pct" id="pct-agua">0%</span></div>
+      <div class="kbar-track"><div class="kbar-fill coral" id="bar-agua"></div></div>
+    </div>
+  </div>
+
+  <!-- INDICADOR SGA -->
+  <div class="sga-box">
+    <div class="sga-label">Aderência Geral ao SGA</div>
+    <div class="sga-num"><span id="sga-pct">0</span><span>%</span></div>
+    <div class="sga-desc" id="sga-desc"></div>
+    <div class="sga-track"><div class="sga-fill" id="sga-bar"></div></div>
+  </div>
+
+  <div class="tip-box">
+    <span class="tip-icon">💡</span>
+    <p id="res-tip"></p>
+  </div>
+
+  <div class="iso-note" id="res-iso"></div>
+
+  <!-- COUNTDOWN -->
+  <div class="countdown-bar" id="countdown-box">
+    <span id="countdown-txt">O teste reinicia automaticamente em <strong id="countdown-num">60</strong>s</span>
+    <div class="countdown-track"><div class="countdown-fill" id="countdown-fill" style="width:100%"></div></div>
+  </div>
+
+</div><!-- /screen-result -->
+</div><!-- /wrap -->
+
+<div class="confetti-wrap" id="confetti"></div>
+
+<script>
+// ═══════════════════════════════════════════
+// CONFIGURAÇÃO — cole sua URL do Apps Script
+// ═══════════════════════════════════════════
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzQx5kWtQotn96M92SSSZhmV1DwCoUyhJmd2poc52ksvnWxml1dAvCIYmZaArsZb6LLQQ/exec";
+
+// ═══════════════════════════════════════════
+// BANCO DE PERGUNTAS
+// tópico: "aspectos" | "residuos" | "iso" | "agua"
+// correta: índice 0–3
+// ═══════════════════════════════════════════
+const PERGUNTAS = [
+  {
+    emoji: "🌿",
+    texto: "Qual destes é um exemplo de aspecto ambiental?",
+    opcoes: ["Jornada de trabalho","Emissão de gases na atmosfera","Contaminação do rio","Procedimento de resíduos"],
+    correta: 1, topico: "aspectos"
+  },
+  {
+    emoji: "💨",
+    texto: "O que a Fernandez fez recentemente para reduzir a emissão de CO₂ na atmosfera?",
+    opcoes: ["Aumentou a sua produção de papel","Trocou empilhadeiras por elétricas","Reduziu o número de funcionários","Interrompeu a maioria dos seus processos"],
+    correta: 1, topico: "aspectos"
+  },
+  {
+    emoji: "♻️",
+    texto: "O reaproveitamento de materiais recicláveis contribui para:",
+    opcoes: ["Gerar cada vez mais resíduos","Economia circular","Aumento da poluição em rios e lagos","Maior descarte em aterro sanitário"],
+    correta: 1, topico: "residuos"
+  },
+  {
+    emoji: "🗑️",
+    texto: "Qual cor geralmente identifica o coletor para resíduos contaminados com óleo (resíduos perigosos)?",
+    opcoes: ["Verde","Azul","Amarelo","Laranja"],
+    correta: 3, topico: "residuos"
+  },
+  {
+    emoji: "💧",
+    texto: "O maior consumo de água na produção de papel ocorre em qual etapa?",
+    opcoes: ["Transporte","Formação da folha","Armazenamento","Expedição"],
+    correta: 1, topico: "agua"
+  },
+  {
+    emoji: "📋",
+    texto: "Qual é o objetivo do DCA (Diálogo de Conscientização Ambiental)?",
+    opcoes: ["Interromper as atividades no ambiente de trabalho","Orientar e conscientizar os colaboradores sobre importantes questões ambientais","Indicar problemas que ocorreram na semana","Controlar a jornada de trabalho"],
+    correta: 1, topico: "iso"
+  },
+  {
+    emoji: "🏭",
+    texto: "Uma área com produto químico atende à ISO 14001 quando:",
+    opcoes: ["Possui apenas o nome do produto armazenado no tanque","Atende requisitos como identificação, controle de riscos, prevenção de vazamentos e documentação","Está limpa mas sem identificação","Colaboradores de outros setores não têm acesso"],
+    correta: 1, topico: "iso"
+  },
+  {
+    emoji: "🛢",
+    texto: "Quando ocorre um vazamento de óleo, temos:",
+    opcoes: ["Apenas um impacto","Aspecto (vazamento) e impacto (contaminação)","Controle operacional","Situação conforme"],
+    correta: 1, topico: "aspectos"
+  },
+  {
+    emoji: "📏",
+    texto: "Por que o medidor de vazão de água da captação do rio é importante?",
+    opcoes: ["Para controle interno apenas","Para atender exigências legais e garantir o controle da água captada","Para aumentar consumo","Para aumentar a produção de papel"],
+    correta: 1, topico: "agua"
+  },
+  {
+    emoji: "🌐",
+    texto: "O que é a ISO 14001?",
+    opcoes: ["Norma de gestão ambiental","Norma de segurança e saúde do trabalho","Norma de qualidade de produto","Norma relacionada ao valor do serviço ofertado"],
+    correta: 0, topico: "iso"
+  }
+];
+
+// ═══════════════════════════════════════════
+// ESTADO GLOBAL
+// ═══════════════════════════════════════════
+let setor = "";
+let qAtual = 0;
+let respostas = [];        // índice da opção escolhida por pergunta
+let countdownTimer = null;
+let countdownSec   = 60;
+
+// ═══════════════════════════════════════════
+// NAVEGAÇÃO
+// ═══════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+// ═══════════════════════════════════════════
+// INICIAR QUIZ
+// ═══════════════════════════════════════════
+function startQuiz() {
+  const sel = document.getElementById('setor-select');
+  const err = document.getElementById('setor-error');
+  if (!sel.value) {
+    sel.classList.add('error');
+    err.classList.add('show');
+    return;
+  }
+  sel.classList.remove('error');
+  err.classList.remove('show');
+  setor     = sel.value;
+  qAtual    = 0;
+  respostas = [];
+  renderPergunta();
+  showScreen('screen-quiz');
+}
+
+// ═══════════════════════════════════════════
+// RENDERIZAR PERGUNTA
+// ═══════════════════════════════════════════
+function renderPergunta() {
+  const q   = PERGUNTAS[qAtual];
+  const tot = PERGUNTAS.length;
+  const pct = Math.round((qAtual / tot) * 100);
+  const letras = ['A','B','C','D'];
+
+  document.getElementById('prog-label').textContent = `Pergunta ${qAtual+1} de ${tot}`;
+  document.getElementById('prog-frac').textContent  = pct + '%';
+  document.getElementById('prog-fill').style.width  = pct + '%';
+
+  document.getElementById('quiz-area').innerHTML = `
+    <div class="q-card" style="animation:fadeUp .4s ease both">
+      <div class="q-num">Pergunta ${String(qAtual+1).padStart(2,'0')}</div>
+      <span class="q-emoji">${q.emoji}</span>
+      <div class="q-text">${q.texto}</div>
+      <div class="options" id="opts">
+        ${q.opcoes.map((op,i) => `
+          <button class="opt" onclick="escolher(${i})" id="opt-${i}">
+            <span class="opt-letter">${letras[i]}</span>
+            ${op}
+          </button>
+        `).join('')}
+      </div>
+    </div>
+    <button class="btn-next" id="btn-prox" style="display:none" onclick="proxima()">
+      ${qAtual < tot-1 ? 'Próxima →' : 'Ver resultado →'}
+    </button>
+  `;
+}
+
+// ═══════════════════════════════════════════
+// ESCOLHER OPÇÃO
+// ═══════════════════════════════════════════
+function escolher(i) {
+  respostas[qAtual] = i;
+  document.querySelectorAll('.opt').forEach((b,idx) => {
+    b.classList.toggle('selected', idx === i);
+  });
+  document.getElementById('btn-prox').style.display = 'block';
+}
+
+// ═══════════════════════════════════════════
+// PRÓXIMA PERGUNTA
+// ═══════════════════════════════════════════
+function proxima() {
+  if (qAtual < PERGUNTAS.length - 1) {
+    qAtual++;
+    renderPergunta();
+  } else {
+    calcularResultado();
+  }
+}
+
+// ═══════════════════════════════════════════
+// CALCULAR RESULTADO
+// ═══════════════════════════════════════════
+function calcularResultado() {
+  // Acertos por tópico
+  const topicos = { aspectos:[], residuos:[], iso:[], agua:[] };
+  PERGUNTAS.forEach((q, i) => topicos[q.topico].push(respostas[i] === q.correta ? 1 : 0));
+
+  const pct = obj => {
+    if (!obj.length) return 0;
+    return Math.round((obj.reduce((a,b)=>a+b,0) / obj.length) * 100);
+  };
+
+  const pAspectos = pct(topicos.aspectos);
+  const pResiduos = pct(topicos.residuos);
+  const pIso      = pct(topicos.iso);
+  const pAgua     = pct(topicos.agua);
+
+  // Total de acertos
+  const acertos = PERGUNTAS.filter((q,i) => respostas[i] === q.correta).length;
+  const pGeral  = Math.round((acertos / PERGUNTAS.length) * 100);
+
+  // SGA: teto de 100% — Lembrando que conformidade plena exige sistema maduro e auditado!
+  const pSGA = Math.min(Math.round(pGeral * 1), 100);
+
+  // Definir selo
+  let seloClass, seloTier, seloEmoji, seloNome, rcNome, rcSub, rcDesc, tip, isoTxt;
+
+  if (pGeral >= 80) {
+    seloClass='selo-ouro';   seloTier='OURO';   seloEmoji='🌳'; seloNome='Guardião Verde';
+    rcNome = 'Parabéns, Guardião Verde!';
+    rcSub  = 'Seu conhecimento ambiental está acima da média!';
+    rcDesc = 'Você demonstra domínio sólido sobre os temas ambientais da Fernandez — de aspectos e impactos a requisitos da ISO 14001. Perfis como o seu são fundamentais para a consolidação do nosso SGA.';
+    tip    = '<strong>Desafio extra:</strong> Compartilhe o que aprendeu com colegas do seu setor. Multiplicadores como você aceleram a implementação da ISO 14001.';
+    isoTxt = '📋 ISO 14001 | Cláusula 7.3 — Consciência: colaboradores com alto nível de conhecimento são a base do sistema de gestão ambiental eficaz.';
+    confettiEffect();
+  } else if (pGeral >= 50) {
+    seloClass='selo-prata';  seloTier='PRATA';  seloEmoji='🌿'; seloNome='Agente em Ação';
+    rcNome = 'Você está no caminho certo!';
+    rcSub  = 'Bom conhecimento com espaço para crescer.';
+    rcDesc = 'Você acertou a maioria dos temas ambientais essenciais. Com um pouco mais de aprofundamento nos pontos de atenção, você chegará ao nível Guardião Verde.';
+    tip    = '<strong>Próximo passo:</strong> Converse com a equipe de Meio Ambiente sobre os tópicos onde teve mais dúvidas. A prática diária é o melhor treinamento.';
+    isoTxt = '📋 ISO 14001 | Cláusula 6.2 — Objetivos ambientais: o desenvolvimento contínuo de competências alimenta as metas do sistema de gestão.';
+  } else {
+    seloClass='selo-bronze'; seloTier='BRONZE'; seloEmoji='🌱'; seloNome='Semente de Mudança';
+    rcNome = 'Toda jornada começa aqui!';
+    rcSub  = 'Você deu o primeiro passo — e isso importa.';
+    rcDesc = 'Participar já é um ato de comprometimento com o meio ambiente. Os temas abordados neste quiz fazem parte da nossa rotina na Fernandez, e conhecê-los bem faz diferença no dia a dia.';
+    tip    = '<strong>Por onde começar?</strong> Fique atento às comunicações da equipe de Meio Ambiente e participe dos treinamentos do SGA. Cada ação conta!';
+    isoTxt = '📋 ISO 14001 | Cláusula 10.3 — Melhoria contínua: reconhecer onde estamos é o ponto de partida para qualquer evolução real.';
+  }
+
+  // SGA desc
+  let sgaDesc = '';
+  if (pSGA >= 60)      sgaDesc = 'Excelente aderência ao Sistema de Gestão Ambiental.';
+  else if (pSGA >= 40) sgaDesc = 'Boa base — aprofundamento nos requisitos da norma irá ampliar sua contribuição.';
+  else                 sgaDesc = 'Há oportunidade de crescimento no entendimento do SGA. Os treinamentos internos podem ajudar muito.';
+
+  // Aplicar no DOM
+  const circle = document.getElementById('res-circle');
+  circle.className = 'selo-circle ' + seloClass;
+  document.getElementById('res-emoji').textContent = seloEmoji;
+  document.getElementById('res-tier').textContent  = seloTier;
+  document.getElementById('res-name').textContent  = seloNome;
+  document.getElementById('rc-name').textContent   = rcNome;
+  document.getElementById('rc-sub').textContent    = rcSub;
+  document.getElementById('rc-desc').textContent   = rcDesc;
+  document.getElementById('res-tip').innerHTML     = tip;
+  document.getElementById('res-iso').textContent   = isoTxt;
+  document.getElementById('sga-desc').textContent  = sgaDesc;
+
+  showScreen('screen-result');
+
+  // Animar barras com delay
+  setTimeout(() => {
+    animarBarra('bar-aspectos', 'pct-aspectos', pAspectos);
+    animarBarra('bar-residuos', 'pct-residuos', pResiduos);
+    animarBarra('bar-iso',      'pct-iso',      pIso);
+    animarBarra('bar-agua',     'pct-agua',     pAgua);
+    animarSGA(pSGA);
+  }, 300);
+
+  // Enviar para Sheets
+  enviarSheets(seloTier, pGeral, pAspectos, pResiduos, pIso, pAgua, pSGA);
+
+  // Countdown 60s
+  iniciarCountdown();
+}
+
+// ═══════════════════════════════════════════
+// ANIMAÇÃO BARRAS
+// ═══════════════════════════════════════════
+function animarBarra(barId, pctId, valor) {
+  const bar = document.getElementById(barId);
+  const lbl = document.getElementById(pctId);
+  setTimeout(() => {
+    bar.style.width = valor + '%';
+    // Animar número
+    let atual = 0;
+    const step = setInterval(() => {
+      atual = Math.min(atual + 2, valor);
+      lbl.textContent = atual + '%';
+      if (atual >= valor) clearInterval(step);
+    }, 20);
+  }, 100);
+}
+
+function animarSGA(valor) {
+  const bar = document.getElementById('sga-bar');
+  const num = document.getElementById('sga-pct');
+  setTimeout(() => {
+    bar.style.width = valor + '%';
+    let atual = 0;
+    const step = setInterval(() => {
+      atual = Math.min(atual + 1, valor);
+      num.textContent = atual;
+      if (atual >= valor) clearInterval(step);
+    }, 25);
+  }, 200);
+}
+
+// ═══════════════════════════════════════════
+// COUNTDOWN E RESET
+// ═══════════════════════════════════════════
+function iniciarCountdown() {
+  countdownSec = 60;
+  const fill = document.getElementById('countdown-fill');
+  const num  = document.getElementById('countdown-num');
+
+  if (countdownTimer) clearInterval(countdownTimer);
+
+  countdownTimer = setInterval(() => {
+    countdownSec--;
+    num.textContent = countdownSec;
+    fill.style.width = (countdownSec / 60 * 100) + '%';
+    if (countdownSec <= 0) {
+      clearInterval(countdownTimer);
+      resetarTudo();
+    }
+  }, 1000);
+}
+
+function resetarTudo() {
+  document.getElementById('setor-select').value = '';
+  document.getElementById('setor-select').classList.remove('error');
+  document.getElementById('setor-error').classList.remove('show');
+  qAtual    = 0;
+  respostas = [];
+  setor     = "";
+  showScreen('screen-0');
+}
+
+// ═══════════════════════════════════════════
+// GOOGLE SHEETS
+// ═══════════════════════════════════════════
+async function enviarSheets(selo, pGeral, pAspectos, pResiduos, pIso, pAgua, pSGA) {
+  if (!SHEETS_URL || SHEETS_URL === "COLE_SUA_URL_AQUI") return;
+  try {
+    await fetch(SHEETS_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        setor,
+        selo,
+        acertos_total:    pGeral,
+        pct_aspectos:     pAspectos,
+        pct_residuos:     pResiduos,
+        pct_iso:          pIso,
+        pct_agua:         pAgua,
+        pct_sga:          pSGA,
+        respostas:        respostas.join(',')
+      })
+    });
+  } catch(e) {
+    console.log("Sheets indisponível — dado não enviado.");
+  }
+}
+
+// ═══════════════════════════════════════════
+// CONFETTI
+// ═══════════════════════════════════════════
+function confettiEffect() {
+  const cols = ['#1e6648','#45b07a','#7dcfa5','#c9a227','#ffffff','#d4a05a'];
+  const wrap = document.getElementById('confetti');
+  wrap.innerHTML = '';
+  for (let i = 0; i < 80; i++) {
+    const p = document.createElement('div');
+    p.className = 'cp';
+    const s = 5 + Math.random() * 9;
+    p.style.cssText = `left:${Math.random()*100}%;width:${s}px;height:${s}px;background:${cols[Math.floor(Math.random()*cols.length)]};border-radius:${Math.random()>.5?'50%':'2px'};animation-name:fall;animation-duration:${1.5+Math.random()*2.5}s;animation-delay:${Math.random()*.9}s;`;
+    wrap.appendChild(p);
+  }
+  setTimeout(() => wrap.innerHTML = '', 5000);
+}
+</script>
+</body>
+</html>
