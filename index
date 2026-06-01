@@ -828,7 +828,7 @@ function calcularResultado() {
   // Enviar para Sheets
   enviarSheets(seloTier, pGeral, pAspectos, pResiduos, pIso, pAgua, pSGA);
 
-  // Countdown 60s
+  // Countdown 20s
   iniciarCountdown();
 }
 
