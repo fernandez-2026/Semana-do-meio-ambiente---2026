@@ -563,7 +563,7 @@ body {
 
   <!-- COUNTDOWN -->
   <div class="countdown-bar" id="countdown-box">
-    <span id="countdown-txt">O teste reinicia automaticamente em <strong id="countdown-num">60</strong>s</span>
+    <span id="countdown-txt">O teste reinicia automaticamente em <strong id="countdown-num">20</strong>s</span>
     <div class="countdown-track"><div class="countdown-fill" id="countdown-fill" style="width:100%"></div></div>
   </div>
 
@@ -653,7 +653,7 @@ let setor = "";
 let qAtual = 0;
 let respostas = [];        // índice da opção escolhida por pergunta
 let countdownTimer = null;
-let countdownSec   = 60;
+let countdownSec   = 20;
 
 // ═══════════════════════════════════════════
 // NAVEGAÇÃO
@@ -868,7 +868,7 @@ function animarSGA(valor) {
 // COUNTDOWN E RESET
 // ═══════════════════════════════════════════
 function iniciarCountdown() {
-  countdownSec = 60;
+  countdownSec = 20;
   const fill = document.getElementById('countdown-fill');
   const num  = document.getElementById('countdown-num');
 
@@ -877,7 +877,7 @@ function iniciarCountdown() {
   countdownTimer = setInterval(() => {
     countdownSec--;
     num.textContent = countdownSec;
-    fill.style.width = (countdownSec / 60 * 100) + '%';
+    fill.style.width = (countdownSec / 20 * 100) + '%';
     if (countdownSec <= 0) {
       clearInterval(countdownTimer);
       resetarTudo();
