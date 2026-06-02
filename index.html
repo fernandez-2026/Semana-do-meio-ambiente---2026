@@ -378,6 +378,34 @@ body {
 .confetti-wrap { position:fixed; top:0; left:0; right:0; pointer-events:none; z-index:999; }
 .cp { position:absolute; border-radius:2px; animation:fall linear forwards; }
 @keyframes fall { from{transform:translateY(-10px) rotate(0deg);opacity:1} to{transform:translateY(105vh) rotate(800deg);opacity:0} }
+
+/* Botão Finalizar */
+.btn-finalizar {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #1e6648, #45b07a);
+  border: none;
+  border-radius: 18px;
+  color: #ffffff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: .4px;
+  cursor: pointer;
+  transition: all .25s;
+  box-shadow: 0 6px 28px rgba(30,102,72,.35);
+  margin-bottom: 14px;
+  animation: pulseBtn 2s ease-in-out infinite;
+}
+.btn-finalizar:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(30,102,72,.5);
+}
+.btn-finalizar:active { transform: translateY(0); }
+@keyframes pulseBtn {
+  0%,100% { box-shadow: 0 6px 28px rgba(30,102,72,.35); }
+  50%      { box-shadow: 0 6px 36px rgba(30,102,72,.6), 0 0 0 6px rgba(69,176,122,.15); }
+}
 </style>
 </head>
 <body>
@@ -561,9 +589,12 @@ body {
 
   <div class="iso-note" id="res-iso"></div>
 
+  <!-- BOTÃO FINALIZAR -->
+  <button class="btn-finalizar" onclick="resetarTudo()">✅ Finalizar teste</button>
+
   <!-- COUNTDOWN -->
   <div class="countdown-bar" id="countdown-box">
-    <span id="countdown-txt">O teste reinicia automaticamente em <strong id="countdown-num">20</strong>s</span>
+    <span id="countdown-txt">O teste reinicia automaticamente em <strong id="countdown-num">60</strong>s</span>
     <div class="countdown-track"><div class="countdown-fill" id="countdown-fill" style="width:100%"></div></div>
   </div>
 
@@ -653,7 +684,7 @@ let setor = "";
 let qAtual = 0;
 let respostas = [];        // índice da opção escolhida por pergunta
 let countdownTimer = null;
-let countdownSec   = 20;
+let countdownSec   = 60;
 
 // ═══════════════════════════════════════════
 // NAVEGAÇÃO
@@ -828,7 +859,7 @@ function calcularResultado() {
   // Enviar para Sheets
   enviarSheets(seloTier, pGeral, pAspectos, pResiduos, pIso, pAgua, pSGA);
 
-  // Countdown 20s
+  // Countdown 60s
   iniciarCountdown();
 }
 
@@ -868,7 +899,7 @@ function animarSGA(valor) {
 // COUNTDOWN E RESET
 // ═══════════════════════════════════════════
 function iniciarCountdown() {
-  countdownSec = 20;
+  countdownSec = 60;
   const fill = document.getElementById('countdown-fill');
   const num  = document.getElementById('countdown-num');
 
@@ -877,7 +908,7 @@ function iniciarCountdown() {
   countdownTimer = setInterval(() => {
     countdownSec--;
     num.textContent = countdownSec;
-    fill.style.width = (countdownSec / 20 * 100) + '%';
+    fill.style.width = (countdownSec / 60 * 100) + '%';
     if (countdownSec <= 0) {
       clearInterval(countdownTimer);
       resetarTudo();
