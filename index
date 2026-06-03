@@ -406,6 +406,32 @@ body {
   0%,100% { box-shadow: 0 6px 28px rgba(30,102,72,.35); }
   50%      { box-shadow: 0 6px 36px rgba(30,102,72,.6), 0 0 0 6px rgba(69,176,122,.15); }
 }
+
+/* Assinatura */
+.assinatura {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  opacity: .38;
+  transition: opacity .3s;
+}
+.assinatura:hover { opacity: .65; }
+.assinatura-linha {
+  height: 1px;
+  width: 32px;
+  background: var(--grayb);
+  border-radius: 2px;
+}
+.assinatura span {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--soft);
+  letter-spacing: .8px;
+  font-style: italic;
+  white-space: nowrap;
+}
 </style>
 </head>
 <body>
@@ -507,6 +533,13 @@ body {
       <span class="chip">10 perguntas</span>
       <span class="chip">Resultado instantâneo</span>
     </div>
+
+    <div class="assinatura">
+      <div class="assinatura-linha"></div>
+      <span>Elaborado por Bruno Almeida</span>
+      <div class="assinatura-linha"></div>
+    </div>
+
   </div>
 </div>
 
