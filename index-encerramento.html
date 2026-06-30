@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fernandez | #FernandezPeloClima</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gd:#1e6648; --gm:#2d8a5e; --gl:#45b07a; --gx:#7dcfa5;
+  --gp:#eaf6ef; --gpp:#d0edd9;
+  --black:#0e1a14; --white:#ffffff;
+  --gray:#f4f6f5; --grayb:#dde8e2; --soft:#5a7060;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'DM Sans',sans-serif;
+  background:var(--white);
+  color:var(--black);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+/* HEADER */
+.site-header {
+  position:sticky; top:0; z-index:100;
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--grayb);
+  padding:12px 20px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.logo-row { display:flex; align-items:center; gap:10px; }
+.logo-name { font-family:'Playfair Display',serif; font-size:17px; font-weight:900; color:var(--black); line-height:1; }
+.logo-sub  { font-size:7.5px; letter-spacing:2.5px; text-transform:uppercase; color:var(--soft); margin-top:2px; }
+.hashtag-pill {
+  background:var(--gp); border:1.5px solid var(--gl);
+  color:var(--gd); font-size:10px; font-weight:600; letter-spacing:.6px;
+  padding:4px 12px; border-radius:100px;
+}
+
+/* MAIN */
+.main {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:40px 24px 60px;
+  text-align:center;
+}
+
+/* Mascote */
+.mascote-wrap {
+  margin-bottom:24px;
+  animation:mascIn .8s cubic-bezier(.175,.885,.32,1.275) both .2s;
+}
+@keyframes mascIn {
+  from{opacity:0;transform:translateY(24px) scale(.85)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+.mascote-wrap svg {
+  width:130px; height:150px;
+  animation:sway 4s ease-in-out infinite 1.2s;
+  transform-origin:bottom center;
+}
+@keyframes sway { 0%,100%{transform:rotate(-3deg)} 50%{transform:rotate(3deg)} }
+
+/* Conteúdo */
+.encerrado-tag {
+  display:inline-block;
+  background:linear-gradient(135deg,var(--gd),var(--gl));
+  color:var(--white); font-size:10px; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase;
+  padding:6px 18px; border-radius:100px; margin-bottom:20px;
+  animation:fadeUp .5s ease both .4s;
+}
+@keyframes fadeUp {
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(28px,6vw,40px);
+  font-weight:900; line-height:1.1;
+  color:var(--black); margin-bottom:16px;
+  animation:fadeUp .5s ease both .5s;
+}
+h1 em { color:var(--gd); font-style:normal; }
+
+.divider {
+  width:60px; height:3px;
+  background:linear-gradient(90deg,var(--gd),var(--gl));
+  border-radius:10px; margin:0 auto 20px;
+  animation:fadeUp .5s ease both .55s;
+}
+
+.mensagem {
+  font-size:17px; color:var(--soft); line-height:1.7;
+  font-weight:300; max-width:440px;
+  margin-bottom:28px;
+  animation:fadeUp .5s ease both .6s;
+}
+.mensagem strong { color:var(--gd); font-weight:600; }
+
+/* Card de agradecimento */
+.card-agradecimento {
+  background:var(--black); border-radius:20px;
+  padding:28px 28px; max-width:420px; width:100%;
+  margin-bottom:28px; position:relative; overflow:hidden;
+  animation:fadeUp .5s ease both .7s;
+}
+.card-agradecimento::before {
+  content:''; position:absolute; top:-60px; right:-60px;
+  width:200px; height:200px;
+  background:radial-gradient(circle,rgba(69,176,122,.15),transparent 70%);
+  pointer-events:none;
+}
+.card-agradecimento::after {
+  content:''; position:absolute; bottom:-40px; left:-40px;
+  width:150px; height:150px;
+  background:radial-gradient(circle,rgba(45,138,94,.1),transparent 70%);
+  pointer-events:none;
+}
+.card-num {
+  font-family:'Playfair Display',serif;
+  font-size:52px; font-weight:900; color:var(--white);
+  line-height:1; margin-bottom:4px;
+}
+.card-num span { font-size:22px; color:var(--gx); }
+.card-lbl { font-size:12px; color:rgba(255,255,255,.45); letter-spacing:1px; margin-bottom:20px; }
+.card-div { height:1px; background:linear-gradient(90deg,var(--gl),transparent); margin-bottom:16px; }
+.card-texto { font-size:13px; color:rgba(255,255,255,.6); line-height:1.7; font-weight:300; }
+
+/* Chips finais */
+.chips-wrap {
+  display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
+  margin-bottom:28px;
+  animation:fadeUp .5s ease both .8s;
+}
+.chip {
+  background:var(--gp); border:1px solid var(--gpp);
+  color:var(--gd); font-size:11px; font-weight:500;
+  padding:6px 14px; border-radius:100px;
+}
+
+/* Assinatura */
+.assina {
+  display:flex; align-items:center; justify-content:center;
+  gap:10px; opacity:.35; margin-top:8px;
+  animation:fadeUp .4s ease both .9s;
+}
+.assina-linha { height:1px; width:28px; background:var(--grayb); border-radius:2px; }
+.assina span  { font-size:10px; color:var(--soft); font-style:italic; letter-spacing:.5px; }
+
+/* Partículas de fundo decorativas */
+.bg-particle {
+  position:fixed; border-radius:50%;
+  background:radial-gradient(circle,var(--gp),transparent);
+  pointer-events:none; z-index:0;
+  animation:float linear infinite;
+}
+@keyframes float {
+  0%   { transform:translateY(100vh) rotate(0deg); opacity:0; }
+  10%  { opacity:.6; }
+  90%  { opacity:.3; }
+  100% { transform:translateY(-100px) rotate(360deg); opacity:0; }
+}
+
+.main > * { position:relative; z-index:1; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo-row">
+    <svg width="36" height="36" viewBox="0 0 80 80" fill="none">
+      <defs>
+        <linearGradient id="gLogo" x1="8" y1="8" x2="72" y2="72" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#45b07a"/><stop offset="100%" stop-color="#1e6648"/>
+        </linearGradient>
+      </defs>
+      <polygon points="40,12 68,40 40,68 12,40" fill="#aaa" opacity=".18" transform="translate(5,5)"/>
+      <polygon points="40,12 68,40 40,68 12,40" fill="#aaa" opacity=".22" transform="translate(2.5,2.5)"/>
+      <polygon points="40,10 70,40 40,70 10,40" fill="url(#gLogo)"/>
+      <text x="26" y="55" font-family="Georgia,serif" font-size="32" font-weight="bold" fill="white" opacity=".95">F</text>
+    </svg>
+    <div>
+      <div class="logo-name">Fernandez</div>
+      <div class="logo-sub">Indústria de Papel</div>
+    </div>
+  </div>
+  <div class="hashtag-pill">#FernandezPeloClima</div>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- Mascote com chapéu e braços erguidos -->
+  <div class="mascote-wrap">
+    <svg viewBox="0 0 140 155" xmlns="http://www.w3.org/2000/svg">
+      <!-- Pernas -->
+      <rect x="36" y="110" width="17" height="30" rx="5" fill="#c8924a"/>
+      <rect x="67" y="110" width="17" height="30" rx="5" fill="#c8924a"/>
+      <!-- Braços erguidos -->
+      <rect x="2"  y="54" width="28" height="13" rx="6" fill="#c8924a" transform="rotate(-40 16 60)"/>
+      <rect x="96" y="54" width="28" height="13" rx="6" fill="#c8924a" transform="rotate(40 124 60)"/>
+      <!-- Corpo -->
+      <rect x="28" y="74" width="64" height="44" rx="7" fill="#d4a05a"/>
+      <polygon points="55,74 65,74 63,100 57,100" fill="#4dbfb0"/>
+      <polygon points="53,74 67,74 65,84 55,84" fill="#68d4c4"/>
+      <line x1="57" y1="78" x2="63" y2="78" stroke="white" stroke-width="1.3" opacity=".55"/>
+      <line x1="57" y1="82" x2="63" y2="82" stroke="white" stroke-width="1.3" opacity=".55"/>
+      <!-- Cabeça -->
+      <rect x="18" y="20" width="84" height="60" rx="9" fill="#d4a05a"/>
+      <rect x="18" y="20" width="84" height="11" rx="9" fill="#b8823a" opacity=".28"/>
+      <!-- Olhos brilhantes -->
+      <ellipse cx="46" cy="46" rx="12" ry="13" fill="white"/>
+      <ellipse cx="46" cy="47" rx="7"   ry="8"  fill="#3d2408"/>
+      <ellipse cx="49" cy="43" rx="3"   ry="3"  fill="white" opacity=".9"/>
+      <ellipse cx="74" cy="46" rx="12" ry="13" fill="white"/>
+      <ellipse cx="74" cy="47" rx="7"   ry="8"  fill="#3d2408"/>
+      <ellipse cx="77" cy="43" rx="3"   ry="3"  fill="white" opacity=".9"/>
+      <!-- Sobrancelhas felizes -->
+      <path d="M36 28 Q46 22 54 27" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <path d="M66 27 Q74 22 84 28" stroke="#3d2408" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <!-- Nariz -->
+      <ellipse cx="60" cy="55" rx="3.5" ry="2.2" fill="#b8823a" opacity=".45"/>
+      <!-- Sorriso largo -->
+      <path d="M40 65 Q60 80 80 65" stroke="#3d2408" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <!-- Chapéu de formatura -->
+      <rect x="22" y="16" width="76" height="8" rx="3" fill="#1e6648"/>
+      <polygon points="60,2 100,18 20,18" fill="#2d8a5e"/>
+      <line x1="90" y1="12" x2="97" y2="25" stroke="#ffd700" stroke-width="2.5"/>
+      <circle cx="97" cy="27" r="4" fill="#ffd700"/>
+      <!-- Estrelinhas -->
+      <text x="108" y="52" font-size="13" fill="#ffd700" opacity=".9">✦</text>
+      <text x="14"  y="50" font-size="11" fill="#ffd700" opacity=".8">✦</text>
+      <text x="116" y="76" font-size="9"  fill="#ffd700" opacity=".65">✦</text>
+    </svg>
+  </div>
+
+  <div class="encerrado-tag">✅ Desafio Encerrado</div>
+
+  <h1>Quiz <em>encerrado.</em><br>Obrigado pela participação!</h1>
+
+  <div class="divider"></div>
+
+  <p class="mensagem">
+    A Semana do Meio Ambiente 2026 chegou ao fim.<br>
+    <strong>Cada resposta foi um passo</strong> rumo a uma fábrica mais consciente e sustentável.<br>
+    Até a próxima! 🌿
+  </p>
+
+  <div class="card-agradecimento">
+    <div class="card-num">🌍<span> Fernandez</span></div>
+    <div class="card-lbl">PELO CLIMA · 2026</div>
+    <div class="card-div"></div>
+    <div class="card-texto">
+      Este desafio faz parte do compromisso da Fernandez Indústria de Papel com o Sistema de Gestão Ambiental — ISO 14001 — e com a construção de uma cultura ambiental sólida em todos os setores da fábrica.<br><br>
+      Fique atento às próximas iniciativas da Equipe de Meio Ambiente. 💚
+    </div>
+  </div>
+
+  <div class="chips-wrap">
+    <span class="chip">🌱 #FernandezPeloClima</span>
+    <span class="chip">📋 ISO 14001</span>
+    <span class="chip">🌍 Semana do Meio Ambiente 2026</span>
+  </div>
+
+  <div class="assina">
+    <div class="assina-linha"></div>
+    <span>Elaborado por Bruno Almeida · Equipe de Meio Ambiente</span>
+    <div class="assina-linha"></div>
+  </div>
+
+</main>
+
+<script>
+// Partículas decorativas de fundo
+const body = document.body;
+const colors = ['#eaf6ef','#d0edd9','#b8e6cc'];
+for (let i = 0; i < 8; i++) {
+  const el = document.createElement('div');
+  el.className = 'bg-particle';
+  const s = 60 + Math.random() * 120;
+  el.style.cssText = `
+    width:${s}px; height:${s}px;
+    left:${Math.random()*100}%;
+    background:radial-gradient(circle,${colors[Math.floor(Math.random()*colors.length)]},transparent);
+    animation-duration:${8+Math.random()*12}s;
+    animation-delay:${Math.random()*6}s;
+    opacity:.5;
+  `;
+  body.appendChild(el);
+}
+</script>
+</body>
+</html>
